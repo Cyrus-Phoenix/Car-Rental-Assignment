@@ -1,9 +1,114 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Car Rental Assignment - G</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Car Rental Assignment - G</h1>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">RegNo</th>
+                <th scope="col">Make</th>
+                <th scope="col">Vehicle Type</th>
+                <th scope="col">Outermeter</th>
+                <th scope="col">Cost/Km</th>
+                <th scope="col">Cost/Day</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>ABC 123</th>
+                <td>Volvo</td>
+                <td>Sedan</td>
+                <td>8600</td>
+                <td>5</td>
+                <td>140</td>
+                <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
 
-Welcome to your new app.
+            </tr>
+            <tr>
+               <th>ABC 123</th>             
+               <td>Volvo</td>
+               <td>Sedan</td>
+               <td>8600</td>
+               <td>5</td>
+               <td>140</td>
+                <td>
+                    <span class="badge badge-Danger
+                           text-uppercase">
+                        Booked
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <th>ABC 123</th>
+                <td>Mercedes</td>
+ <td>Sedan</td>
+ <td>8600</td>
+ <td>5</td>
+ <td>140</td>
+                <td>
+                    <span class="badge badge-dark
+                           text-uppercase">
+                        Available
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">RegNo</th>
+                <th scope="col">Make</th>
+                <th scope="col">Vehicle Type</th>
+                <th scope="col">Outermeter</th>
+                <th scope="col">Cost/Km</th>
+                <th scope="col">Cost/Day</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="alert alert-success">Available</td>
+
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="alert alert-danger">Booked</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td>Larry the Bird</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="alert alert-success"> Available </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@code {
+
+
+}
