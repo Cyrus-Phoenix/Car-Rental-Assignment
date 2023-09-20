@@ -3,21 +3,25 @@
 <PageTitle>Car Rental Assignment - G</PageTitle>
 
 <h1>Car Rental Assignment - G</h1>
+
+
+<!-- Vehicles  -->
 <div>
-    <table class="table">
+    <h4><strong>Vehicles</strong></h4>
+    <table class="table border border-black">
         <thead>
             <tr>
                 <th scope="col">RegNo</th>
                 <th scope="col">Make</th>
                 <th scope="col">Vehicle Type</th>
-                <th scope="col">Outermeter</th>
+                <th scope="col">Odometer</th>
                 <th scope="col">Cost/Km</th>
                 <th scope="col">Cost/Day</th>
                 <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr class="border table-borderless">
                 <th>ABC 123</th>
                 <td>Volvo</td>
                 <td>Sedan</td>
@@ -27,30 +31,30 @@
                 <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
 
             </tr>
-            <tr>
-               <th>ABC 123</th>             
-               <td>Volvo</td>
-               <td>Sedan</td>
-               <td>8600</td>
-               <td>5</td>
-               <td>140</td>
+            <tr class="border table-borderless">
+                <th>ABC 456</th>
+                <td>Tesla</td>
+                <td>Sedan</td>
+                <td>8600</td>
+                <td>10</td>
+                <td>280</td>
                 <td>
-                    <span class="badge badge-Danger
-                           text-uppercase">
+                    <span class="badge rounded-pill
+                           text-bg-danger">
                         Booked
                     </span>
                 </td>
             </tr>
-            <tr>
-                <th>ABC 123</th>
+            <tr class="border table-borderless">
+                <th>EFG 123</th>
                 <td>Mercedes</td>
- <td>Sedan</td>
- <td>8600</td>
- <td>5</td>
- <td>140</td>
+                <td>Sedan</td>
+                <td>8600</td>
+                <td>7.5</td>
+                <td>180</td>
                 <td>
-                    <span class="badge badge-dark
-                           text-uppercase">
+                    <span class="badge rounded-pill
+                           text-bg-dark">
                         Available
                     </span>
                 </td>
@@ -59,47 +63,84 @@
     </table>
 </div>
 
+
+<!-- Booking  -->
 <div>
-    <table class="table">
+    <h4><strong>Boookings</strong></h4>
+    <table class="table border border-black">
         <thead>
             <tr>
                 <th scope="col">RegNo</th>
-                <th scope="col">Make</th>
-                <th scope="col">Vehicle Type</th>
-                <th scope="col">Outermeter</th>
-                <th scope="col">Cost/Km</th>
-                <th scope="col">Cost/Day</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Km Rented</th>
+                <th scope="col">Km Returned</th>
+                <th scope="col">Rented</th>
+                <th scope="col">Returned</th>
+                <th scope="col">Cost</th>
                 <th scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
+            <tr class="border table-borderless">
+                <th>ABC 123</th>
+                <td>Mark Otto</td>
+                <td>1000</td>
+                <td></td>
+                <td>12/09/2023</td>
                 <td></td>
                 <td></td>
-                <td></td>
-                <td class="alert alert-success">Available</td>
+                <td><span class="badge text-bg-danger">Open</span></td>
 
             </tr>
+            <tr class="border table-borderless">
+                <th>ABC 123</th>
+                <td>Larry Johnson</td>
+                <td></td>
+                <td>8600</td>
+                <td>5</td>
+                <td>140</td>
+                <td>140</td>
+                <td>
+                    <span class="badge 
+                           text-bg-success">
+                        Closed
+                    </span>
+                </td>
+            </tr>
+           
+        </tbody>
+    </table>
+</div>
+
+
+
+<!-- Customer  -->
+<div>
+    <h4><strong>Customer</strong></h4>
+    <table class="table border border-black">
+        <thead>
             <tr>
+                <th scope="col">SSN</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">First Name</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="border table-borderless">
+                <th>1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+            </tr>
+            <tr class="border table-borderless">
                 <th scope="row">2</th>
                 <td>Jacob</td>
                 <td>Thornton</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="alert alert-danger">Booked</td>
             </tr>
-            <tr>
+            <tr class="border table-borderless">
                 <th scope="row">3</th>
-                <td>Larry the Bird</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td class="alert alert-success"> Available </td>
+                <td>Larry</td>
+                <td>Johnson</td>
             </tr>
         </tbody>
     </table>
