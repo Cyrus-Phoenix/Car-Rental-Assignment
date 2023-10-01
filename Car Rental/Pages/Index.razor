@@ -1,5 +1,6 @@
 ﻿@page "/"
 
+
 <PageTitle>Car Rental Assignment - G</PageTitle>
 
 <h1>Car Rental Assignment - G</h1>
@@ -20,17 +21,23 @@
                 <th scope="col">Status</th>
             </tr>
         </thead>
-        <tbody>
-            <tr class="border table-borderless">
-                <th>ABC 123</th>
-                <td>Volvo</td>
-                <td>Sedan</td>
-                <td>8600</td>
-                <td>5</td>
-                <td>140</td>
-                <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
 
-            </tr>
+        <tbody>
+            @foreach()
+            {
+                <tr class="border table-borderless">
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    @* Code the logic for switching available or Booked with ternary expression? *@
+                    <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
+                </tr>
+            }
+            
+            @*
             <tr class="border table-borderless">
                 <th>ABC 456</th>
                 <td>Tesla</td>
@@ -59,12 +66,14 @@
                     </span>
                 </td>
             </tr>
+            *@
         </tbody>
     </table>
 </div>
 
 
 <!-- Booking  -->
+@*
 <div>
     <h4><strong>Boookings</strong></h4>
     <table class="table border border-black">
@@ -112,9 +121,10 @@
     </table>
 </div>
 
-
+*@
 
 <!-- Customer  -->
+@*
 <div>
     <h4><strong>Customer</strong></h4>
     <table class="table border border-black">
@@ -145,7 +155,7 @@
         </tbody>
     </table>
 </div>
-
+*@
 
 
 
