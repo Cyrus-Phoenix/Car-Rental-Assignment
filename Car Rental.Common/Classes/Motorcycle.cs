@@ -3,14 +3,14 @@ using Car_Rental.Common.Interfaces;
 
 namespace Car_Rental.Common.Classes;
 
-internal class Motorcycle : IVehicles
+public class Motorcycle : IVehicle
 {
 
     public int Id { get; set; }
 
-    public int RegNo { get; set; }
+    public string RegNo { get; set; }
 
-    public int Make { get; set; }
+    public VehiclesMake VehicleMake { get; set; }
 
     public VehiclesTypes VehicleType { get; set; }
 
@@ -20,9 +20,10 @@ internal class Motorcycle : IVehicles
 
     public int CostDay { get; set; }
 
-    public VehicleStatuses Status { get; set; }
+    //  public VehicleStatuses Status { get; set; }
 
-
+    public Motorcycle(int id, string regNo, VehiclesMake vmake, VehiclesTypes vtype, int odometer, int costkm, int costday)
+     => (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay) = (id, regNo, vmake, vtype, odometer, costkm, costday);
 
 
 

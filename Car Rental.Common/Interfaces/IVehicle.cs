@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Car_Rental.Common.Interfaces
 {
-    public interface IVehicles
+    public interface IVehicle
     {
 
         public int Id { get; set; }
 
-        public int RegNo { get; set; }
+        public string RegNo { get; set; }
 
-        public int Make { get; set; }
+        public VehiclesMake VehicleMake { get; set; }
 
         public VehiclesTypes VehicleType { get; set; }
 
@@ -24,7 +24,7 @@ namespace Car_Rental.Common.Interfaces
 
         public int CostDay { get; set; }
 
-        public VehicleStatuses Status { get; set; }
+       // public VehicleStatuses Status { get; set; }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿@page "/"
-
+@using Business.Classes
+@inject Business b
 
 <PageTitle>Car Rental Assignment - G</PageTitle>
 
@@ -23,17 +24,18 @@
         </thead>
 
         <tbody>
-            @foreach()
-            {
-                <tr class="border table-borderless">
-                    <th></th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+             @foreach(var vehicle in b.GetVehicles()){
+               <tr class="border table-borderless">
+
+                    <td>@vehicle.RegNo</td>
+                    <td>@vehicle.VehicleMake</td>
+                    <td>@vehicle.VehicleType</td>
+                    <td>@vehicle.Odometer</td>
+                    <td>@vehicle.CostKm</td>
+                    <td>@vehicle.CostDay</td>
                     @* Code the logic for switching available or Booked with ternary expression? *@
                     <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
+             
                 </tr>
             }
             
@@ -124,7 +126,7 @@
 *@
 
 <!-- Customer  -->
-@*
+
 <div>
     <h4><strong>Customer</strong></h4>
     <table class="table border border-black">
@@ -136,7 +138,17 @@
                 
             </tr>
         </thead>
+        
         <tbody>
+            @foreach (var customer in b.GetCustomers()){
+                <tr class="border table-borderless">
+                    <th>@customer.SSN</th>
+                    <th>@customer.FName</th>
+                    <th>@customer.LName</th>
+                    
+            </tr>
+            }
+            @*
             <tr class="border table-borderless">
                 <th>1</th>
                 <td>Mark</td>
@@ -152,14 +164,17 @@
                 <td>Larry</td>
                 <td>Johnson</td>
             </tr>
+           *@
         </tbody>
+        
     </table>
 </div>
-*@
+
 
 
 
 @code {
+
 
 
 }

@@ -3,7 +3,7 @@
 
 namespace Car_Rental.Common.Classes;
 
-internal class Customer : IPerson
+public class Customer : ICustomer
 {
 
     public int SSN { get; set; }
@@ -12,7 +12,8 @@ internal class Customer : IPerson
 
     public string LName { get; set; }
 
-    public Customer( int ssn, string fName, string lName ) => ( SSN, FName, LName ) = ( ssn, fName, lName );
+    public Customer( int ssn, string fName, string lName ) 
+        => ( SSN, FName, LName ) = ( ssn, fName, lName );
 
 
     

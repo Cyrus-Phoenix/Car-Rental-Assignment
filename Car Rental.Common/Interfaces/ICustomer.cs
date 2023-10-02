@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Car_Rental.Common.Interfaces
 {
-    internal interface IPerson
+    public interface ICustomer
     {
 
         public int SSN { get; set; }
