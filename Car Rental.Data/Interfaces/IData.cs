@@ -1,4 +1,5 @@
-﻿using Car_Rental.Common.Interfaces;
+﻿using Car_Rental.Common.Enums;
+using Car_Rental.Common.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,10 +11,10 @@ namespace Car_Rental.Data.Interfaces
 {
     public interface IData
     {
-        List<ICustomer> GetCustomers();
-        List<IVehicle> GetVehicles();
+       public IEnumerable<ICustomer> GetCustomers();
+       public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default);
+       public IEnumerable<IBookings> GetBookings();
 
-        
 
     }
 }

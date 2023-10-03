@@ -20,10 +20,20 @@ public class Motorcycle : IVehicle
 
     public int CostDay { get; set; }
 
-    //  public VehicleStatuses Status { get; set; }
+    public VehicleStatuses VStatus { get; set; }
 
-    public Motorcycle(int id, string regNo, VehiclesMake vmake, VehiclesTypes vtype, int odometer, int costkm, int costday)
-     => (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay) = (id, regNo, vmake, vtype, odometer, costkm, costday);
+    #region With VehicleStatuses
+
+    public Motorcycle(int id, string regNo, VehiclesMake vMake, VehiclesTypes vType, int odometer, int costKm, int costDay, VehicleStatuses vStatus)
+     => (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay, VStatus) = (id, regNo, vMake, vType, odometer, costKm, costDay, vStatus);
+    #endregion
+
+    #region Without VehicleStatuses    
+    //public Motorcycle(int id, string regNo, VehiclesMake vMake, VehiclesTypes vType, int odometer, int costKm, int costDay)
+    //=> (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay) = (id, regNo, vMake, vType, odometer, costKm, costDay);
+    #endregion
+
+
 
 
 

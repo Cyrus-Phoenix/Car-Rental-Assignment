@@ -19,8 +19,9 @@ public class Business
         _data = data;
     }
 
-    public List<ICustomer> GetCustomers() => _data.GetCustomers();
-    public List<IVehicle> GetVehicles() => _data.GetVehicles();
+    public IEnumerable<ICustomer> GetCustomers() => _data.GetCustomers();
+    public IEnumerable<IVehicle> GetVehicles() => _data.GetVehicles();
+    public IEnumerable<IBookings> GetBookings() => _data.GetBookings();
 
 
 

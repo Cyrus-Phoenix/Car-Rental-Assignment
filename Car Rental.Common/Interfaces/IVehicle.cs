@@ -24,7 +24,7 @@ namespace Car_Rental.Common.Interfaces
 
         public int CostDay { get; set; }
 
-       // public VehicleStatuses Status { get; set; }
+        public VehicleStatuses VStatus { get; set; }
 
     }
 }

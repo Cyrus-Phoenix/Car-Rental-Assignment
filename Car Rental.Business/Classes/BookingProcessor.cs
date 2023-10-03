@@ -1,10 +1,6 @@
-﻿using Car_Rental.Common.Interfaces;
+﻿using Car_Rental.Common.Enums;
+using Car_Rental.Common.Interfaces;
 using Car_Rental.Data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Car_Rental.Business.Classes;
 
@@ -17,9 +13,14 @@ public class BookingProcessor
         _data = data;
     }
 
-    public List<ICustomer> GetCustomers() => _data.GetCustomers();
-    public List<IVehicle> GetVehicles() => _data.GetVehicles();
-
-
+    public IEnumerable<ICustomer> GetCustomers() => _data.GetCustomers();
+    public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default)
+    {
+            
+            return _data.GetVehicles();
+    }
+    
+    
+    
 
 }

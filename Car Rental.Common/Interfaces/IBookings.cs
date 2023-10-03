@@ -1,20 +1,22 @@
 ﻿using Car_Rental.Common.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Car_Rental.Common.Interfaces
 {
     public interface IBookings
     {
         public int Id { get; set; }
-       // public string Name { get; set; }
-
-
-
+        //public string Name { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public int Cost { get; set; }
+        public int Km { get; set; }
+        public DateTime days { get; set; }
         public VehicleStatuses VStatus { get; set; }
+
+
+
+
+
     }
 
 

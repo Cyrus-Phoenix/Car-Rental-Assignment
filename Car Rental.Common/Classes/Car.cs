@@ -24,11 +24,23 @@ public class Car : IVehicle
 
     public int CostDay { get; set; }
 
-    // public VehicleStatuses Status { get; set; }
+    public VehicleStatuses VStatus { get; set; }
 
-    public Car(int id, string regNo, VehiclesMake vmake, VehiclesTypes vtype, int odometer, int costkm, int costday) 
-    => (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay) = (id, regNo, vmake, vtype, odometer, costkm, costday);
-    
-   
+    #region With VehicleStatuses
+
+    public Car(int id, string regNo, VehiclesMake vmake, VehiclesTypes vType, int odometer, int costKm, int costDay, VehicleStatuses vStatus)
+    => (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay, VStatus) = (id, regNo, vmake, vType, odometer, costKm, costDay, vStatus);
+
+
+    #endregion
+
+    #region Without VehicleStatuses
+
+    //public Car(int id, string regNo, VehiclesMake vmake, VehiclesTypes vType, int odometer, int costKm, int costDay)
+    //=> (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay) = (id, regNo, vmake, vType, odometer, costKm, costDay);
+
+
+    #endregion
+
 
 }

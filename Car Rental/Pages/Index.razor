@@ -25,7 +25,7 @@
 
         <tbody>
              @foreach(var vehicle in b.GetVehicles()){
-               <tr class="border table-borderless">
+                <tr class="border table-borderless">
 
                     <td>@vehicle.RegNo</td>
                     <td>@vehicle.VehicleMake</td>
@@ -33,13 +33,25 @@
                     <td>@vehicle.Odometer</td>
                     <td>@vehicle.CostKm</td>
                     <td>@vehicle.CostDay</td>
+                    @*<td>@vehicle.VStatus</td>*@
                     @* Code the logic for switching available or Booked with ternary expression? *@
+
+                    @if(vehicle.VStatus > 0) {
+                    <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
+                    }
+                    else{
                     <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
-             
+                    }
+                  
+                    
                 </tr>
+
+                
             }
             
             @*
+
+
             <tr class="border table-borderless">
                 <th>ABC 456</th>
                 <td>Tesla</td>
@@ -145,26 +157,9 @@
                     <th>@customer.SSN</th>
                     <th>@customer.FName</th>
                     <th>@customer.LName</th>
-                    
             </tr>
             }
-            @*
-            <tr class="border table-borderless">
-                <th>1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-            </tr>
-            <tr class="border table-borderless">
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-            </tr>
-            <tr class="border table-borderless">
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>Johnson</td>
-            </tr>
-           *@
+
         </tbody>
         
     </table>
@@ -174,7 +169,44 @@
 
 
 @code {
+    string booked = "Booked";
+    string available = "Available";
+
+    bool isBooked;
 
 
+
+    private void Book()
+    {
+        // // Temporär fix
+        // if (!isBooked)
+        // {
+        //     isBooked = false;
+        //     return booked;
+        // }else
+        // {
+        //     isBooked = true;
+        //     return available;
+
+        // }
+
+       
+
+           /* logik för knappen
+          *
+          * if(!isBooked){
+          *    isBooked = false
+          *    @vehicle.VStatus(booked)
+          * }
+          * else{
+          *    isBooked = true
+          *     @vehicle.VStatus(default / Available)
+          * }
+          *
+          *
+          *
+          *
+          */
+    }
 
 }
