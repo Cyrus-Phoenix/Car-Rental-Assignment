@@ -1,20 +1,12 @@
-﻿using Car_Rental.Common.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-
-namespace Car_Rental.Common.Classes;
-
-public class Customer : ICustomer
+namespace Car_Rental.Common.Classes
 {
-
-    public int SSN { get; set; }
-
-    public string FName { get; set; }
-
-    public string LName { get; set; }
-
-    public Customer( int ssn, string fName, string lName ) 
-        => ( SSN, FName, LName ) = ( ssn, fName, lName );
-
-
-    
+    internal class Customer
+    {
+    }
 }

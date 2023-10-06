@@ -2,7 +2,7 @@
 
 public enum VehiclesTypes
 {
-    Sedan=1,
+    Sedan,
     Combi,
     Van,
     Motorcycle
