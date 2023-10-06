@@ -1,4 +1,6 @@
 ﻿@page "/"
+@using Business.Classes
+@inject Business b
 
 <PageTitle>Car Rental Assignment - G</PageTitle>
 
@@ -20,17 +22,36 @@
                 <th scope="col">Status</th>
             </tr>
         </thead>
-        <tbody>
-            <tr class="border table-borderless">
-                <th>ABC 123</th>
-                <td>Volvo</td>
-                <td>Sedan</td>
-                <td>8600</td>
-                <td>5</td>
-                <td>140</td>
-                <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
 
-            </tr>
+        <tbody>
+             @foreach(var vehicle in b.GetVehicles()){
+                <tr class="border table-borderless">
+
+                    <td>@vehicle.RegNo</td>
+                    <td>@vehicle.VehicleMake</td>
+                    <td>@vehicle.VehicleType</td>
+                    <td>@vehicle.Odometer</td>
+                    <td>@vehicle.CostKm</td>
+                    <td>@vehicle.CostDay</td>
+                    @*<td>@vehicle.VStatus</td>*@
+                    @* Code the logic for switching available or Booked with ternary expression? *@
+
+                    @if(vehicle.VStatus > 0) {
+                    <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
+                    }
+                    else{
+                    <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
+                    }
+                  
+                    
+                </tr>
+
+                
+            }
+            
+            @*
+
+
             <tr class="border table-borderless">
                 <th>ABC 456</th>
                 <td>Tesla</td>
@@ -59,12 +80,14 @@
                     </span>
                 </td>
             </tr>
+            *@
         </tbody>
     </table>
 </div>
 
 
 <!-- Booking  -->
+@*
 <div>
     <h4><strong>Boookings</strong></h4>
     <table class="table border border-black">
@@ -112,9 +135,10 @@
     </table>
 </div>
 
-
+*@
 
 <!-- Customer  -->
+
 <div>
     <h4><strong>Customer</strong></h4>
     <table class="table border border-black">
@@ -126,23 +150,18 @@
                 
             </tr>
         </thead>
+        
         <tbody>
-            <tr class="border table-borderless">
-                <th>1</th>
-                <td>Mark</td>
-                <td>Otto</td>
+            @foreach (var customer in b.GetCustomers()){
+                <tr class="border table-borderless">
+                    <th>@customer.SSN</th>
+                    <th>@customer.FName</th>
+                    <th>@customer.LName</th>
             </tr>
-            <tr class="border table-borderless">
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-            </tr>
-            <tr class="border table-borderless">
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>Johnson</td>
-            </tr>
+            }
+
         </tbody>
+        
     </table>
 </div>
 
@@ -150,6 +169,44 @@
 
 
 @code {
+    string booked = "Booked";
+    string available = "Available";
 
+    bool isBooked;
+
+
+
+    private void Book()
+    {
+        // // Temporär fix
+        // if (!isBooked)
+        // {
+        //     isBooked = false;
+        //     return booked;
+        // }else
+        // {
+        //     isBooked = true;
+        //     return available;
+
+        // }
+
+       
+
+           /* logik för knappen
+          *
+          * if(!isBooked){
+          *    isBooked = false
+          *    @vehicle.VStatus(booked)
+          * }
+          * else{
+          *    isBooked = true
+          *     @vehicle.VStatus(default / Available)
+          * }
+          *
+          *
+          *
+          *
+          */
+    }
 
 }
