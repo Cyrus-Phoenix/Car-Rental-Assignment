@@ -5,18 +5,18 @@ namespace Car_Rental.Common.Interfaces
     public interface IBookings
     {
         public int Id { get; set; }
-        public int CustomerSSN { get; set; }
-        public string Customer { get; set; }
-        public string RegNo { get; set; }
-        public VehiclesMake VehiclesMake { get; set; }
+        public int CustomerSSN { get; }
+        public string Customer { get; }
+        public string RegNo { get; }
+        public VehiclesMake VehiclesMake { get; }
         //public string Name { get; set; }
-        public DateTime Start { get; set; }
-        public DateTime? End { get; set; }
-        public int Cost { get; set; }
-        public int KmRented { get; set; }
-        public int KmReturned { get; set; }
-        public DateTime days { get; set; }
-        public VehicleStatuses VStatus { get; set; }
+        public DateTime Start { get; init; }
+        public DateTime? End { get; init; }
+        public int Cost { get; init; }
+        public int KmRented { get; init; }
+        public int KmReturned { get; init; }
+        public DateTime days { get; init; }
+        public VehicleStatuses VStatus { get; init; }
 
 
 

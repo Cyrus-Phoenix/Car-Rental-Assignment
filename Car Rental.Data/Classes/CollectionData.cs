@@ -3,11 +3,6 @@ using Car_Rental.Common.Classes;
 using Car_Rental.Common.Interfaces;
 using Car_Rental.Common.Enums;
 
-using System.Reflection.Metadata.Ecma335;
-using System.Net.NetworkInformation;
-using System.Runtime.CompilerServices;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace Car_Rental.Data.Classes;
 
 /*
@@ -36,11 +31,6 @@ public class CollectionData : IData
 
     int numberOfDays;
     int kmReturned;
-    DateTime startBook;
-    DateTime endBook;
-
-
-
 
     public CollectionData()
     {
@@ -155,17 +145,18 @@ public class CollectionData : IData
     }
 
 
+    #region Old Way of typing method
+
     //(DateTime, DateTime) BookingDates(DateTime startingDate, DateTime endingDate) 
     //{ 
-    //    startBook = startingDate;
-    //    endBook = endingDate;
     //    return (startingDate, endingDate);
-
     //}
+    #endregion
+
 
     (DateTime, DateTime) BookingDates(DateTime startingDate, DateTime endingDate) 
-        => (startBook, endBook) 
-        =  (startingDate, endingDate);
+    =>  (startingDate, endingDate);
+
 
     int DaysRented(DateTime startBook, DateTime endBook)
     {
