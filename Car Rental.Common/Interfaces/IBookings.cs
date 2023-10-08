@@ -5,7 +5,9 @@ namespace Car_Rental.Common.Interfaces
     public interface IBookings
     {
         public int Id { get; set; }
+        public int CustomerSSN { get; set; }
         public string Customer { get; set; }
+        public string RegNo { get; set; }
         public VehiclesMake VehiclesMake { get; set; }
         //public string Name { get; set; }
         public DateTime Start { get; set; }

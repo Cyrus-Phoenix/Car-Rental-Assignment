@@ -13,6 +13,7 @@ namespace Car_Rental.Data.Classes;
 /*
  Have to contain all the Data
  */
+
 public class CollectionData : IData
 {
     List<IVehicle> _vehicles = new();
@@ -95,14 +96,16 @@ public class CollectionData : IData
 
         
         
-        (DateTime startBook1, DateTime endBook1) = BookTime(new DateTime(2023, 6, 12), new DateTime(2023, 6, 13));
-        numberOfDays = DaysBooked(startBook1, endBook1);
+        (DateTime startBook1, DateTime endBook1) = BookingDates(new DateTime(2023, 6, 12), new DateTime(2023, 6, 13));
+        numberOfDays = DaysRented(startBook1, endBook1);
         int kmReturned1 = KmAmount(400);
-        var cost1 = calc(vehicle1, endBook1);
+        var cost1 = CostCalculator(vehicle1, endBook1);
 
         var b1 = new Booking(
                             1,
+                            customer1.SSN,
                             customer1.FName + " " + customer1.LName,
+                            vehicle1.RegNo,
                             vehicle1.VehicleMake,
                             cost1,
                             vehicle1.Odometer,
@@ -116,14 +119,16 @@ public class CollectionData : IData
         
 
 
-        (DateTime startBook2, DateTime endBook2) = BookTime(new DateTime(2023, 6, 12), DateTime.MinValue);
-        numberOfDays = DaysBooked(startBook2, endBook2);
+        (DateTime startBook2, DateTime endBook2) = BookingDates(new DateTime(2023, 6, 12), DateTime.MinValue);
+        numberOfDays = DaysRented(startBook2, endBook2);
         int kmReturned2 = KmAmount(0);
-        var cost2 = calc(vehicle1, endBook2);
+        var cost2 = CostCalculator(vehicle1, endBook2);
         var b2 = new Booking
             (
                            2,
+                           customer2.SSN,
                            customer2.FName + " " + customer2.LName,
+                           vehicle2.RegNo,
                            vehicle2.VehicleMake,
                            cost2,
                            vehicle2.Odometer,
@@ -141,6 +146,8 @@ public class CollectionData : IData
     }
 
 
+    #region All Methods
+
     int KmAmount(int km)
     {
         kmReturned = km;
@@ -148,24 +155,26 @@ public class CollectionData : IData
     }
 
 
-    (DateTime, DateTime) BookTime(DateTime startingDate, DateTime endingDate) 
-    { 
-        startBook = startingDate;
-        endBook = endingDate;
-        return (startingDate, endingDate);
-    }
+    //(DateTime, DateTime) BookingDates(DateTime startingDate, DateTime endingDate) 
+    //{ 
+    //    startBook = startingDate;
+    //    endBook = endingDate;
+    //    return (startingDate, endingDate);
 
+    //}
 
+    (DateTime, DateTime) BookingDates(DateTime startingDate, DateTime endingDate) 
+        => (startBook, endBook) 
+        =  (startingDate, endingDate);
 
-
-    int DaysBooked(DateTime startBook, DateTime endBook)
+    int DaysRented(DateTime startBook, DateTime endBook)
     {
         TimeSpan days = startBook - endBook;
         int totalDays = days.Days;
         return totalDays;
     }
 
-    int calc(IVehicle vehicle, DateTime endBook)
+    int CostCalculator(IVehicle vehicle, DateTime endBook)
     {
        
         int cost = 0;
@@ -178,6 +187,8 @@ public class CollectionData : IData
         return cost;
 
     }
+
+    #endregion
 
 
 

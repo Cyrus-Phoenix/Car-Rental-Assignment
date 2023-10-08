@@ -53,35 +53,7 @@
             @*
 
 
-            <tr class="border table-borderless">
-                <th>ABC 456</th>
-                <td>Tesla</td>
-                <td>Sedan</td>
-                <td>8600</td>
-                <td>10</td>
-                <td>280</td>
-                <td>
-                    <span class="badge rounded-pill
-                           text-bg-danger">
-                        Booked
-                    </span>
-                </td>
-            </tr>
-            <tr class="border table-borderless">
-                <th>EFG 123</th>
-                <td>Mercedes</td>
-                <td>Sedan</td>
-                <td>8600</td>
-                <td>7.5</td>
-                <td>180</td>
-                <td>
-                    <span class="badge rounded-pill
-                           text-bg-dark">
-                        Available
-                    </span>
-                </td>
-            </tr>
-            *@
+              *@
         </tbody>
     </table>
 </div>
@@ -96,8 +68,10 @@
     <table class="table border border-black">
         <thead>
             <tr>
-                @* <th scope="col">RegNo</th>*@
+                <th scope="col">SSN</th>
                 <th scope="col">Customer</th>
+                <th scope="col">RegNo</th>
+                <th scope="col">Vehiclemake</th>
                 <th scope="col">Km Rented</th>
                 <th scope="col">Km Returned</th>
                 <th scope="col">Rented</th>
@@ -110,7 +84,10 @@
 
             @foreach(var booking in b.GetBookings()){
             <tr class="border table-borderless">
+                <th>@booking.CustomerSSN</th>
                 <th>@booking.Customer</th>
+                <th>@booking.RegNo</th>
+                <th>@booking.VehiclesMake</th>
                 <td>@booking.KmRented</td>
                 <td>@booking.KmReturned</td>
                 <td>@booking.Start.ToString("MM/dd/yyyy")</td>
@@ -175,7 +152,7 @@
     string booked = "Booked";
     string available = "Available";
 
-    bool isBooked;
+   // bool isBooked;
 
 
 

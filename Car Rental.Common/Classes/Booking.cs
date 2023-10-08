@@ -8,7 +8,9 @@ namespace Car_Rental.Common.Classes;
 public class Booking : IBookings
 {
     public int Id { get; set; }
+    public int CustomerSSN { get; set; }
     public string Customer { get; set; }
+    public string RegNo { get; set; }
     public VehiclesMake VehiclesMake { get; set; }
     public DateTime Start { get; set; }
     public DateTime? End { get; set; }
@@ -21,9 +23,9 @@ public class Booking : IBookings
     List<Booking> bookings = new();
 
     // public Booking(int id, int cost, DateTime end, DateTime start, VehicleStatuses vStatus) => (Id, Cost, Start, End,  VStatus) = (id, cost, start, end, vStatus);
-    public Booking(int id, string customer, VehiclesMake vehiclesMake, int cost, int kmRented, int kmReturned, DateTime start, DateTime end, VehicleStatuses vStatus)
-   => (Id, Customer, VehiclesMake, Cost, KmRented, KmReturned, Start, End, VStatus)
-    = (id, customer, vehiclesMake, cost, kmRented, kmReturned, start, end, vStatus);
+    public Booking(int id, int customerSSN,  string customer, string regNo, VehiclesMake vehiclesMake, int cost, int kmRented, int kmReturned, DateTime start, DateTime end, VehicleStatuses vStatus)
+   => (Id, CustomerSSN, Customer, RegNo, VehiclesMake, Cost, KmRented, KmReturned, Start, End, VStatus)
+    = (id, customerSSN, customer, regNo, vehiclesMake, cost, kmRented, kmReturned, start, end, vStatus);
 
     void BookVechile()
     {
