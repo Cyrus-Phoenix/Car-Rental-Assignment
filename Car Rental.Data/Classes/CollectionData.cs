@@ -11,9 +11,9 @@ namespace Car_Rental.Data.Classes;
 
 public class CollectionData : IData
 {
-    List<IVehicle> _vehicles = new();
-    List<ICustomer> _customers = new();
-    List<IBookings> _bookings = new();
+    readonly List<IVehicle> _vehicles = new();
+    readonly List<ICustomer> _customers = new();
+    readonly List<IBookings> _bookings = new();
 
     #region Booking timers
 
@@ -36,10 +36,10 @@ public class CollectionData : IData
     {
         #region With VehicleStatuses
 
-        var vehicle1 = new Car(1, "ABC 123", (VehiclesMake)1, VehiclesTypes.Sedan, 5500, 10, 250, VehicleStatuses.Available);
-        var vehicle2 = new Car(2, "ABC 345", VehiclesMake.BMW, VehiclesTypes.Combi, 8500, 5, 140, VehicleStatuses.Available);
-        var vehicle3 = new Motorcycle(1, "DEF 123", (VehiclesMake)3, VehiclesTypes.Motorcycle, 500, 50, 300, VehicleStatuses.Available);
-        var vehicle4 = new Motorcycle(2, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 2, 80, VehicleStatuses.Available);
+        var vehicle1 = new Car(1, "ABC 123", (VehiclesMake)1, VehiclesTypes.Sedan, 5500, 5, 250, VehicleStatuses.Available);
+        var vehicle2 = new Car(2, "ABC 345", VehiclesMake.BMW, VehiclesTypes.Combi, 8500, 2, 140, VehicleStatuses.Available);
+        var vehicle3 = new Motorcycle(1, "DEF 123", (VehiclesMake)3, VehiclesTypes.Motorcycle, 500, 10, 300, VehicleStatuses.Available);
+        var vehicle4 = new Motorcycle(2, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 1, 80, VehicleStatuses.Available);
 
         _vehicles.Add(vehicle1);
         _vehicles.Add(vehicle2);
