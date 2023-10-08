@@ -8,20 +8,22 @@ namespace Car_Rental.Common.Classes;
 public class Booking : IBookings
 {
     public int Id { get; set; }
-    //public string Name { get; set; }
+    public string Customer { get; set; }
+    public VehiclesMake VehiclesMake { get; set; }
     public DateTime Start { get; set; }
-    public DateTime End { get; set; }
+    public DateTime? End { get; set; }
     public int Cost { get; set; }
-    public int Km { get; set; }
+    public int KmRented { get; set; }
+    public int KmReturned { get; set; }
     public DateTime days { get; set; }
     public VehicleStatuses VStatus { get; set; }
 
     List<Booking> bookings = new();
 
-   // public Booking(int id, int cost, DateTime end, DateTime start, VehicleStatuses vStatus) => (Id, Cost, Start, End,  VStatus) = (id, cost, start, end, vStatus);
-    public Booking(int id, VehicleStatuses vStatus) => (Id,  VStatus) = (id, vStatus);
-    
-
+    // public Booking(int id, int cost, DateTime end, DateTime start, VehicleStatuses vStatus) => (Id, Cost, Start, End,  VStatus) = (id, cost, start, end, vStatus);
+    public Booking(int id, string customer, VehiclesMake vehiclesMake, int cost, int kmRented, int kmReturned, DateTime start, DateTime end, VehicleStatuses vStatus)
+   => (Id, Customer, VehiclesMake, Cost, KmRented, KmReturned, Start, End, VStatus)
+    = (id, customer, vehiclesMake, cost, kmRented, kmReturned, start, end, vStatus);
 
     void BookVechile()
     {
@@ -33,15 +35,22 @@ public class Booking : IBookings
         
     }
 
-    void ReturnVehicle(IVehicle vehicle) {
+      void ReturnVehicle(IVehicle vehicle) {
 
-        End = DateTime.Now;
-        TimeSpan days = End - Start;
-        int totaldays = Int32.Parse(days.ToString());
+        // TimeSpan days = End - Start;
+        int totalDays = Int32.Parse(days.ToString());
 
-        Cost = totaldays * vehicle.CostDay + Km * vehicle.CostKm;
+        int DifferenceKm = KmRented - KmReturned;
+
+        Cost = totalDays * vehicle.CostDay + DifferenceKm * vehicle.CostKm;
+
+        int newTotalKm = KmRented + KmReturned;
+
+        KmRented = newTotalKm;
 
         VStatus = VehicleStatuses.Available;
+
+       
 
         // Assign values to the class' properties with values from the vehicle parameter
         // Cost = days * vehicle.CostDay + km * vehicle.CostKm;

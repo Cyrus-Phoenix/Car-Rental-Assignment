@@ -48,7 +48,8 @@
 
                 
             }
-            
+          
+
             @*
 
 
@@ -86,14 +87,16 @@
 </div>
 
 
+
+
+
 <!-- Booking  -->
-@*
 <div>
     <h4><strong>Boookings</strong></h4>
     <table class="table border border-black">
         <thead>
             <tr>
-                <th scope="col">RegNo</th>
+                @* <th scope="col">RegNo</th>*@
                 <th scope="col">Customer</th>
                 <th scope="col">Km Rented</th>
                 <th scope="col">Km Returned</th>
@@ -104,38 +107,38 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="border table-borderless">
-                <th>ABC 123</th>
-                <td>Mark Otto</td>
-                <td>1000</td>
-                <td></td>
-                <td>12/09/2023</td>
-                <td></td>
-                <td></td>
-                <td><span class="badge text-bg-danger">Open</span></td>
 
-            </tr>
+            @foreach(var booking in b.GetBookings()){
             <tr class="border table-borderless">
-                <th>ABC 123</th>
-                <td>Larry Johnson</td>
-                <td></td>
-                <td>8600</td>
-                <td>5</td>
-                <td>140</td>
-                <td>140</td>
-                <td>
-                    <span class="badge 
-                           text-bg-success">
-                        Closed
-                    </span>
-                </td>
+                <th>@booking.Customer</th>
+                <td>@booking.KmRented</td>
+                <td>@booking.KmReturned</td>
+                <td>@booking.Start.ToString("MM/dd/yyyy")</td>
+                    <td>
+                        @if (booking.End != DateTime.MinValue)
+                        {
+                            @booking.End?.ToString("MM/dd/yyyy")
+                        }
+                    </td>
+                <td>@booking.Cost Kr</td>
+                    @if (booking.VStatus > 0)
+                    {
+                        <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
+                    }
+                    else
+                    {
+                        <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
+                    }
             </tr>
-           
+            }
+
         </tbody>
     </table>
+
+         
 </div>
 
-*@
+
 
 <!-- Customer  -->
 
