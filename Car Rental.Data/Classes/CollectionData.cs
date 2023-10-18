@@ -48,10 +48,6 @@ public class CollectionData : IData
 
         #endregion
 
-       
-
-
-
         #region Without VehicleStatuses 
 
         //_vehicles.Add(new Car(1, "ABC 123", (VehiclesMake)1, VehiclesTypes.Sedan, 5500, 10, 250));
@@ -76,11 +72,6 @@ public class CollectionData : IData
 
 
         #endregion
-
-
-
-        // Assign values to the class' properties with values from the vehicle parameter
-        // Cost = days * vehicle.CostDay + km * vehicle.CostKm;
 
         #region Booking
 
@@ -133,6 +124,7 @@ public class CollectionData : IData
 
 
         #endregion
+
     }
 
 
