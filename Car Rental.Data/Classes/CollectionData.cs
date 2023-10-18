@@ -93,12 +93,10 @@ public class CollectionData : IData
 
         var b1 = new Booking(
                             1,
-                            customer1.SSN,
-                            customer1.FName + " " + customer1.LName,
-                            vehicle1.RegNo,
-                            vehicle1.VehicleMake,
+                            customer1,
+                            vehicle1,
                             cost1,
-                            vehicle1.Odometer,
+                            //vehicle1.Odometer,
                             kmReturned1 + vehicle1.Odometer,
                             startBook1,
                             endBook1,
@@ -116,16 +114,18 @@ public class CollectionData : IData
         var b2 = new Booking
             (
                            2,
-                           customer2.SSN,
-                           customer2.FName + " " + customer2.LName,
-                           vehicle2.RegNo,
-                           vehicle2.VehicleMake,
+                           customer2,
+                           vehicle2,
+                           //customer2.SSN,
+                           //customer2.FName + " " + customer2.LName,
+                           //vehicle2.RegNo,
+                           //vehicle2.VehicleMake,
                            cost2,
-                           vehicle2.Odometer,
+                           //vehicle2.Odometer,
                            kmReturned2 + vehicle2.Odometer,
                            startBook2,
                            endBook2,
-                           vehicle1.VStatus = VehicleStatuses.Booked
+                           vehicle2.VStatus = VehicleStatuses.Booked
              ) ;
         _bookings.Add(b2);
 
@@ -187,7 +187,7 @@ public class CollectionData : IData
 
 
 
-    public IEnumerable<ICustomer> GetCustomers()=> _customers;
+    public IEnumerable<ICustomer> GetCustomers() => _customers;
     public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _vehicles;
    
     public IEnumerable<IBookings> GetBookings() => _bookings; 

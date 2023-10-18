@@ -6,19 +6,19 @@ namespace Car_Rental.Common.Classes;
 public class Motorcycle : IVehicle
 {
 
-    public int Id { get; set; }
+    public int Id { get; init; }
 
-    public string RegNo { get; set; }
+    public string RegNo { get; init; }
 
-    public VehiclesMake VehicleMake { get; set; }
+    public VehiclesMake VehicleMake { get; }
 
-    public VehiclesTypes VehicleType { get; set; }
+    public VehiclesTypes VehicleType { get; }
 
-    public int Odometer { get; set; }
+    public int Odometer { get; init; }
 
-    public int CostKm { get; set; }
+    public int CostKm { get; init; }
 
-    public int CostDay { get; set; }
+    public int CostDay { get; init; }
 
     public VehicleStatuses VStatus { get; set; }
 

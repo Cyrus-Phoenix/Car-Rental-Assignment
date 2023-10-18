@@ -35,14 +35,15 @@
                     <td>@vehicle.CostDay</td>
                     @*<td>@vehicle.VStatus</td>*@
                     @* Code the logic for switching available or Booked with ternary expression? *@
-
+                    <td><span class="badge rounded-pill text-bg-@(vehicle.VStatus > 0 ? "danger" : "Available")">Booked</span></td>
+                    @*
                     @if(vehicle.VStatus > 0) {
                     <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
                     }
                     else{
                     <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
                     }
-                  
+                    *@
                     
                 </tr>
 
@@ -84,11 +85,11 @@
 
             @foreach(var booking in b.GetBookings()){
             <tr class="border table-borderless">
-                <th>@booking.CustomerSSN</th>
-                <th>@booking.Customer</th>
-                <th>@booking.RegNo</th>
-                <th>@booking.VehiclesMake</th>
-                <td>@booking.KmRented</td>
+                <th>@booking.Person.SSN</th>
+                <th>@booking.Person.FName @booking.Person.LName</th>
+                <th>@booking.Vehicle.RegNo</th>
+                <th>@booking.Vehicle.VehicleMake</th>
+                <td>@booking.Vehicle.Odometer</td>
                 <td>@booking.KmReturned</td>
                 <td>@booking.Start.ToString("MM/dd/yyyy")</td>
                     <td>
@@ -98,7 +99,7 @@
                         }
                     </td>
                 <td>@booking.Cost Kr</td>
-                    @if (booking.VStatus > 0)
+                    @if (booking.Vehicle.VStatus > 0)
                     {
                         <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
                     }
