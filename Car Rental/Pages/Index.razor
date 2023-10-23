@@ -35,7 +35,7 @@
                     <td>@vehicle.CostDay</td>
                     @*<td>@vehicle.VStatus</td>*@
                     @* Code the logic for switching available or Booked with ternary expression? *@
-                    <td><span class="badge rounded-pill text-bg-@(vehicle.VStatus > 0 ? "danger" : "Available")">Booked</span></td>
+                    <td><span class="badge rounded-pill text-bg-@(vehicle.VStatus > 0 ? "danger" : "dark")">@vehicle.VStatus</span></td>
                     @*
                     @if(vehicle.VStatus > 0) {
                     <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
@@ -99,6 +99,9 @@
                         }
                     </td>
                 <td>@booking.Cost Kr</td>
+
+                    <td><span class="badge rounded-pill text-bg-@(booking.Vehicle.VStatus > 0 ? "danger" : "success")">@booking.Vehicle.VStatus</span></td>
+                @*
                     @if (booking.Vehicle.VStatus > 0)
                     {
                         <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
@@ -107,6 +110,8 @@
                     {
                         <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
                     }
+                *@
+                
             </tr>
             }
 

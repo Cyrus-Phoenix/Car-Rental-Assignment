@@ -1,39 +1,25 @@
 ﻿using Car_Rental.Common.Enums;
-using Car_Rental.Common.Interfaces;
 
 namespace Car_Rental.Common.Classes;
 
-public class Motorcycle : IVehicle
+public class Motorcycle : Vehicle
 {
 
-    public int Id { get; init; }
+    /* 
+    * Just for inheritance example
+    * In this case makes no sense to have this.
+    */
 
-    public string RegNo { get; init; }
+    int McID {  get; set; }
 
-    public VehiclesMake VehicleMake { get; }
-
-    public VehiclesTypes VehicleType { get; }
-
-    public int Odometer { get; init; }
-
-    public int CostKm { get; init; }
-
-    public int CostDay { get; init; }
-
-    public VehicleStatuses VStatus { get; set; }
-
-    #region With VehicleStatuses
-
+    #region Constructors
     public Motorcycle(int id, string regNo, VehiclesMake vMake, VehiclesTypes vType, int odometer, int costKm, int costDay, VehicleStatuses vStatus)
-     => (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay, VStatus) = (id, regNo, vMake, vType, odometer, costKm, costDay, vStatus);
+        : base( id, regNo, vMake, vType, odometer, costKm, costDay, vStatus ) { }
+
+    public Motorcycle( int mcid, int id, string regNo, VehiclesMake vMake, VehiclesTypes vType, int odometer, int costKm, int costDay, VehicleStatuses vStatus)
+      : base(id, regNo, vMake, vType, odometer, costKm, costDay, vStatus) { McID = mcid; }
+
     #endregion
-
-    #region Without VehicleStatuses    
-    //public Motorcycle(int id, string regNo, VehiclesMake vMake, VehiclesTypes vType, int odometer, int costKm, int costDay)
-    //=> (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay) = (id, regNo, vMake, vType, odometer, costKm, costDay);
-    #endregion
-
-
 
 
 

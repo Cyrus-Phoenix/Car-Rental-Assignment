@@ -48,16 +48,6 @@ public class CollectionData : IData
 
         #endregion
 
-        #region Without VehicleStatuses 
-
-        //_vehicles.Add(new Car(1, "ABC 123", (VehiclesMake)1, VehiclesTypes.Sedan, 5500, 10, 250));
-        //_vehicles.Add(new Car(2, "ABC 345", VehiclesMake.BMW, VehiclesTypes.Combi, 8500, 5, 140));
-        //_vehicles.Add(new Motorcycle(1, "DEF 123", (VehiclesMake)3, VehiclesTypes.Motorcycle, 500, 50, 300));
-        //_vehicles.Add(new Motorcycle(2, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 2, 80));
-
-        #endregion
-
-
         #region Customers
 
         var customer1 = new Customer(2345, "John", "Doe");
