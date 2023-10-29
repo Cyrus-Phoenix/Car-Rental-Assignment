@@ -9,21 +9,19 @@ public class BookingProcessor
 
     // Experiement processor 
 
-    IData _data;
+    IData _db;
 
     public BookingProcessor(IData data)
     {
-        _data = data;
+        _db = data;
     }
 
-    public IEnumerable<ICustomer> GetCustomers() => _data.GetCustomers();
-    public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default)
-    {
-            
-            return _data.GetVehicles();
-    }
-    
-    
-    
+
+    public IEnumerable<ICustomer> GetCustomers() => _db.GetCustomers().OrderBy(c => c.LastName);
+    public IEnumerable<IVehicle> GetVehicles() => _db.GetVehicles();
+    public IEnumerable<IBooking> GetBookings() => _db.GetBookings();
+
+
+
 
 }

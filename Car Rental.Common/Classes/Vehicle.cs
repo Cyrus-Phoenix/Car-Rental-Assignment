@@ -31,7 +31,11 @@ namespace Car_Rental.Common.Classes
 
         #endregion
 
+        #region Methods
 
+
+
+        #endregion
 
     }
 }

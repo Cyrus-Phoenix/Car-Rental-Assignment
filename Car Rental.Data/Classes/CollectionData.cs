@@ -13,17 +13,16 @@ public class CollectionData : IData
 {
     readonly List<IVehicle> _vehicles = new();
     readonly List<ICustomer> _customers = new();
-    readonly List<IBookings> _bookings = new();
+    readonly List<IBooking> _bookings = new();
 
-    #region Booking timers
+    #region NewIdVariabels
 
+    public int NewVehicleId => _vehicles.Count.Equals(0) ? 1 : _vehicles.Max(id => id.Id) + 1; 
+    public int NewCustomerId => _customers.Count.Equals(0) ? 1 : _customers.Max(id => id.Id) + 1; 
+    public int NewBookingId => _bookings.Count.Equals(0) ? 1 : _bookings.Max(id => id.Id) + 1; 
 
-
-
-
-
-
-    // static DateTime dNow = DateTime.Now;
+   
+    //TODO skapa logiken för att skapa nya bokningar, personer, fordon
 
 
     #endregion
@@ -37,9 +36,9 @@ public class CollectionData : IData
         #region With VehicleStatuses
 
         var vehicle1 = new Car(1, "ABC 123", (VehiclesMake)1, VehiclesTypes.Sedan, 5500, 5, 250, VehicleStatuses.Available);
-        var vehicle2 = new Car(2, "ABC 345", VehiclesMake.BMW, VehiclesTypes.Combi, 8500, 2, 140, VehicleStatuses.Available);
+        Car vehicle2 = new (2, "ABC 345", VehiclesMake.BMW, VehiclesTypes.Combi, 8500, 2, 140, VehicleStatuses.Available);
         var vehicle3 = new Motorcycle(1, "DEF 123", (VehiclesMake)3, VehiclesTypes.Motorcycle, 500, 10, 300, VehicleStatuses.Available);
-        var vehicle4 = new Motorcycle(2, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 1, 80, VehicleStatuses.Available);
+        Motorcycle vehicle4 = new (2, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 1, 80, VehicleStatuses.Available);
 
         _vehicles.Add(vehicle1);
         _vehicles.Add(vehicle2);
@@ -50,10 +49,10 @@ public class CollectionData : IData
 
         #region Customers
 
-        var customer1 = new Customer(2345, "John", "Doe");
-        var customer2 = new Customer(5678, "Lucky", "Luke");
-        var customer3 = new Customer(9012, "John", "Snow");
-        var customer4 = new Customer(3456, "Louise", "Lane");
+        var customer1 = new Customer(1, 820512, "John", "Doe");
+        var customer2 = new Customer(2, 801212, "Lucky", "Luke");
+        var customer3 = new Customer(3, 581201, "John", "Snow");
+        var customer4 = new Customer(4, 900126, "Louise", "Lane");
 
         _customers.Add(customer1);
         _customers.Add(customer2);
@@ -163,7 +162,15 @@ public class CollectionData : IData
 
     #endregion
 
+    
+    
+    #region Generic Methods
 
+
+
+
+
+    #endregion
 
 
 
@@ -172,7 +179,7 @@ public class CollectionData : IData
     public IEnumerable<ICustomer> GetCustomers() => _customers;
     public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _vehicles;
    
-    public IEnumerable<IBookings> GetBookings() => _bookings; 
+    public IEnumerable<IBooking> GetBookings() => _bookings; 
 
 
 

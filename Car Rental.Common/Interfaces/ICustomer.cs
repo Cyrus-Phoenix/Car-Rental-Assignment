@@ -8,12 +8,13 @@ namespace Car_Rental.Common.Interfaces
 {
     public interface ICustomer
     {
+        public int Id { get; }
 
-        public int SSN { get; set; }
+        public int SocialSecurityNumber { get; }
 
-        public string FName { get; set; }
+        public string FirstName { get; set; }
 
-        public string LName { get; set; }
+        public string LastName { get; set; } 
 
     }
 }

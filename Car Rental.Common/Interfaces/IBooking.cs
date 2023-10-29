@@ -2,7 +2,7 @@
 
 namespace Car_Rental.Common.Interfaces
 {
-    public interface IBookings
+    public interface IBooking
     { 
         public int Id { get; set; }
 

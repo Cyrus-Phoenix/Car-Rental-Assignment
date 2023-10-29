@@ -1,6 +1,6 @@
 ﻿@page "/"
 @using Business.Classes
-@inject Business b
+@inject BookingProcessor b
 
 <PageTitle>Car Rental Assignment - G</PageTitle>
 
@@ -8,10 +8,40 @@
 
 
 <!-- Vehicles  -->
-<div>
+<div class="container">
     <h4><strong>Vehicles</strong></h4>
     <table class="table border border-black">
-        <thead>
+        <thead class="table-dark">
+            <tr>
+                <td>  <input type="text" class="form-control" placeholder="RegNo"></td>
+                <td>
+                    <button class="btn btn-secondary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Vehicle Make
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach (var vehicletype in b.GetVehicles())
+                        {
+                            <li><button class="dropdown-item" type="button">@vehicletype.VehicleMake</button></li>
+                        }
+                    </ul>
+                </td>
+                <td>  
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Vehicle Type
+                    </button>
+                    <ul class="dropdown-menu">
+                        @foreach(var vehicletype in b.GetVehicles())
+                        {
+                        <li><button class="dropdown-item" type="button">@vehicletype.VehicleType</button></li>
+                        }
+                    </ul>
+                </td>
+                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
+                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
+                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
+                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
+                <td> <input class="btn btn-primary" type="submit" value="Add"></td>
+            </tr>
             <tr>
                 <th scope="col">RegNo</th>
                 <th scope="col">Make</th>
@@ -24,6 +54,7 @@
         </thead>
 
         <tbody>
+          
              @foreach(var vehicle in b.GetVehicles()){
                 <tr class="border table-borderless">
 
@@ -64,10 +95,10 @@
 
 
 <!-- Booking  -->
-<div>
+<div class="container">
     <h4><strong>Boookings</strong></h4>
     <table class="table border border-black">
-        <thead>
+        <thead class="table-dark">
             <tr>
                 <th scope="col">SSN</th>
                 <th scope="col">Customer</th>
@@ -85,8 +116,8 @@
 
             @foreach(var booking in b.GetBookings()){
             <tr class="border table-borderless">
-                <th>@booking.Person.SSN</th>
-                <th>@booking.Person.FName @booking.Person.LName</th>
+                <th>@booking.Person.SocialSecurityNumber</th>
+                <th>@booking.Person.FirstName @booking.Person.LastName</th>
                 <th>@booking.Vehicle.RegNo</th>
                 <th>@booking.Vehicle.VehicleMake</th>
                 <td>@booking.Vehicle.Odometer</td>
@@ -125,25 +156,31 @@
 
 <!-- Customer  -->
 
-<div>
+<div class="container">
     <h4><strong>Customer</strong></h4>
-    <table class="table border border-black">
-        <thead>
+    <table class="table border border-black" style="max-width: 40%">
+        <thead class="table-dark" >
             <tr>
                 <th scope="col">SSN</th>
                 <th scope="col">Last Name</th>
                 <th scope="col">First Name</th>
-                
+                <th></th>
             </tr>
         </thead>
         
         <tbody>
+            <tr>
+                <td>  <input type="date" class="form-control" placeholder="DateOfBirth"></td>
+                <td> <input type="text" class="form-control" placeholder="Last Name"></td>
+                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
+                <td> <input class="btn btn-primary" type="submit" value="Submit"></td>
+            </tr>
             @foreach (var customer in b.GetCustomers()){
                 <tr class="border table-borderless">
-                    <th>@customer.SSN</th>
-                    <th>@customer.FName</th>
-                    <th>@customer.LName</th>
-            </tr>
+                    <th>@customer.SocialSecurityNumber</th>
+                    <th>@customer.FirstName</th>
+                    <th>@customer.LastName</th>
+                </tr>
             }
 
         </tbody>
@@ -152,47 +189,5 @@
 </div>
 
 
-
-
-@code {
-    string booked = "Booked";
-    string available = "Available";
-
-   // bool isBooked;
-
-
-
-    private void Book()
-    {
-        // // Temporär fix
-        // if (!isBooked)
-        // {
-        //     isBooked = false;
-        //     return booked;
-        // }else
-        // {
-        //     isBooked = true;
-        //     return available;
-
-        // }
-
-       
-
-           /* logik för knappen
-          *
-          * if(!isBooked){
-          *    isBooked = false
-          *    @vehicle.VStatus(booked)
-          * }
-          * else{
-          *    isBooked = true
-          *     @vehicle.VStatus(default / Available)
-          * }
-          *
-          *
-          *
-          *
-          */
-    }
 
 }
