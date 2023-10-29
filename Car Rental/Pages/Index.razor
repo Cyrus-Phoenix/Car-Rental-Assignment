@@ -19,9 +19,9 @@
                         Vehicle Make
                     </button>
                     <ul class="dropdown-menu">
-                        @foreach (var vehicletype in b.GetVehicles())
+                        @foreach (var vehiclemake in b.GetVehicles())
                         {
-                            <li><button class="dropdown-item" type="button">@vehicletype.VehicleMake</button></li>
+                            <li><button class="dropdown-item" type="button">@vehiclemake.VehicleMake</button></li>
                         }
                     </ul>
                 </td>
@@ -36,10 +36,10 @@
                         }
                     </ul>
                 </td>
-                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
-                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
-                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
-                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
+                <td>  <input type="text" class="form-control" placeholder="Odometer"></td>
+                <td>  <input type="text" class="form-control" placeholder="Cost/Km"></td>
+                <td>  <input type="text" class="form-control" placeholder="Cost/Day"></td>
+
                 <td> <input class="btn btn-primary" type="submit" value="Add"></td>
             </tr>
             <tr>
