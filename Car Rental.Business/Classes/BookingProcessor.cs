@@ -26,7 +26,7 @@ public class BookingProcessor
     {
 
         _db.Add<ICustomer>(new Customer(_db.NewCustomerId, socialSecurityNumber, firstName, lastName));
-    
+       
     }
 
 
@@ -41,8 +41,7 @@ public class BookingProcessor
     {
         
 
-    
-    
+
     }
 
 
@@ -73,7 +72,9 @@ public class BookingProcessor
     // Calling Default Interface Methods
     public string[] VehicleStatusNames => _db.VehicleStatusNames;
     public string[] VehicleTypeNames => _db.VehicleTypeNames;
-    public VehiclesTypes GetVehicleType(string name) => _db.GetVehicleType(name);
+    public string[] VehicleMakeNames => _db.VehicleMakeNames;
+    public VehiclesTypes GetVehiclesType(string name) => _db.GetVehicleType(name);
+    public VehiclesMake GetVehiclesMake(string name) => _db.GetVehicleMake(name);
 
 
   

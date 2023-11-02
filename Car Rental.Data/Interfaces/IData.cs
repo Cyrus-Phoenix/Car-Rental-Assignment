@@ -47,7 +47,7 @@ namespace Car_Rental.Data.Interfaces
 
         //TODO: Fråga om varför den måste "castas"
         public VehiclesTypes GetVehicleType(string name) => (VehiclesTypes)Enum.Parse(typeof(VehiclesTypes), name); // Retunera en enum konstants värde med hjälp av konstantens namn
-        public VehiclesMake GetVehiclesMake(string name) => (VehiclesMake)Enum.Parse(typeof(VehiclesMake), name); // Retunera en enum konstants värde med hjälp av konstantens namn
+        public VehiclesMake GetVehicleMake(string name) => (VehiclesMake)Enum.Parse(typeof(VehiclesMake), name); // Retunera en enum konstants värde med hjälp av konstantens namn
     }
 }
  
