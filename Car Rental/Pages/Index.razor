@@ -15,26 +15,22 @@
             <tr>
                 <td>  <input type="text" class="form-control" placeholder="RegNo"></td>
                 <td>
-                    <button class="btn btn-secondary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Vehicle Make
-                    </button>
-                    <ul class="dropdown-menu">
+                    <select class="form-select border border-dark">
+                        <option value="" selected></option>
                         @foreach (var vehiclemake in b.GetVehicles())
                         {
-                            <li><button class="dropdown-item" type="button">@vehiclemake.VehicleMake</button></li>
+                           <option value="@b.GetVehicles()">@vehiclemake.VehicleMake</option>
                         }
-                    </ul>
+                    </select>
                 </td>
-                <td>  
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Vehicle Type
-                    </button>
-                    <ul class="dropdown-menu">
-                        @foreach(var vehicletype in b.GetVehicles())
+                <td>
+                    <select class="form-select border border-dark">
+                        <option value="" selected></option>
+                        @foreach (var vehicletype in b.GetVehicles())
                         {
-                        <li><button class="dropdown-item" type="button">@vehicletype.VehicleType</button></li>
+                            <option value="@b.GetVehicles()">@vehicletype.VehicleType</option>
                         }
-                    </ul>
+                    </select>
                 </td>
                 <td>  <input type="text" class="form-control" placeholder="Odometer"></td>
                 <td>  <input type="text" class="form-control" placeholder="Cost/Km"></td>
@@ -113,7 +109,7 @@
             </tr>
         </thead>
         <tbody>
-
+            @*
             @foreach(var booking in b.GetBookings()){
             <tr class="border table-borderless">
                 <th>@booking.Person.SocialSecurityNumber</th>
@@ -141,11 +137,11 @@
                     {
                         <td><span class="badge rounded-pill text-bg-dark">Available</span></td>
                     }
-                *@
+            
                 
             </tr>
             }
-
+            *@
         </tbody>
     </table>
 
@@ -175,7 +171,9 @@
                 <td>  <input type="text" class="form-control" placeholder="First Name"></td>
                 <td> <input class="btn btn-primary" type="submit" value="Submit"></td>
             </tr>
-            @foreach (var customer in b.GetCustomers()){
+            @foreach (var customer in b.GetCustomers())
+            {
+                
                 <tr class="border table-borderless">
                     <th>@customer.SocialSecurityNumber</th>
                     <th>@customer.FirstName</th>

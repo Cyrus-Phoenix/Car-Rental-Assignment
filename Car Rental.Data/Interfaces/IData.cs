@@ -21,10 +21,33 @@ namespace Car_Rental.Data.Interfaces
 
         #endregion
 
-        
+
+         List<T> Get<T>(Expression<Func<T, bool>>? expression);
+         T? Single<T>(Expression<Func<T, bool>>? expression);
+         public void Add<T>(T item);
+
         public IEnumerable<ICustomer> GetCustomers();
         public  IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default);
         public IEnumerable<IBooking> GetBookings();
 
+
+       // int NewCustomerId { get;}
+       // public int NewVehicleId { get;}
+       // public int NewBookingId { get;}
+
+        //IBooking RentVehicle(int vehicleId, int customerId);
+        //IBooking ReturnVehicle(int vehicleId);
+
+
+
+        // Default Interface Methods
+        public string[] VehicleStatusNames => Enum.GetNames(typeof(VehicleStatuses));// Retunera enum konstanterna
+        public string[] VehicleTypeNames => Enum.GetNames(typeof(VehiclesTypes));// Retunera enum konstanterna
+        public string[] VehicleMakeNames => Enum.GetNames(typeof(VehiclesMake));// Retunera enum konstanterna
+
+        //TODO: Fråga om varför den måste "castas"
+        public VehiclesTypes GetVehicleType(string name) => (VehiclesTypes)Enum.Parse(typeof(VehiclesTypes), name); // Retunera en enum konstants värde med hjälp av konstantens namn
+        public VehiclesMake GetVehiclesMake(string name) => (VehiclesMake)Enum.Parse(typeof(VehiclesMake), name); // Retunera en enum konstants värde med hjälp av konstantens namn
     }
 }
+ 

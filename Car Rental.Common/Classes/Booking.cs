@@ -23,7 +23,7 @@ public class Booking : IBooking
     public int KmReturned { get; init; }
     public DateTime days { get; init; }
 
-   public VehicleStatuses VStatus { get; init; }
+    public VehicleStatuses VStatus { get; init; }
  
     
     public Booking(int id, ICustomer customer, IVehicle vehicle,   /*int customerSSN,  string customer, string regNo, VehiclesMake vehiclesMake,*/ int cost, /*int kmRented,*/ int kmReturned, DateTime start, DateTime end, VehicleStatuses vStatus)
@@ -40,6 +40,8 @@ public class Booking : IBooking
         KmRented = vehicle.Odometer;
         VStatus = VehicleStatuses.Booked;
     }
+
+
 
 
 

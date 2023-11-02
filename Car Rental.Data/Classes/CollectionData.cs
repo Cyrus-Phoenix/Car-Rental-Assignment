@@ -2,6 +2,8 @@
 using Car_Rental.Common.Classes;
 using Car_Rental.Common.Interfaces;
 using Car_Rental.Common.Enums;
+using System.Linq.Expressions;
+using System.Reflection;
 
 namespace Car_Rental.Data.Classes;
 
@@ -167,20 +169,102 @@ public class CollectionData : IData
     #region Generic Methods
 
 
+    public List<T> Get<T>(Expression<Func<T, bool>>? expression)
+    {
+        try {
+            
+            // Hämta fälten Propertierna etc.
+            var fieldInfo = GetType()
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                .FirstOrDefault(f => f.FieldType == typeof(List<T>))
+                ?? throw new InvalidOperationException("Unsupported type");
+
+            // Hämta data som den innehåller
+            var value = fieldInfo.GetValue(this) 
+                        ?? throw new InvalidDataException($"No data of found.");
+
+            // Omvandla till en IQueryable så att man kan använda lambda
+            // och filtrera innan datat hämtas istället för tvärtom
+            var collection = (IQueryable<T>)value;
+            
+            if(expression is null) return collection.ToList();
+            return collection.Where(expression).ToList();
+
+            }
+        catch (Exception ex) {
+
+            throw ex;
+
+        }
+    }
+    
+
+    public void Add<T>(T entity)
+    {
+        var fieldInfo = GetType()
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                .FirstOrDefault(f => f.FieldType == typeof(List<T>))
+                ?? throw new InvalidOperationException($"No type of {typeof(T)} found.");
+
+        var list = (IQueryable<T>)entity;
+
+        if(entity is not null)
+        {
+           list.ToList().Add(entity);
+        }
+        else
+        {
+            throw new ArgumentNullException($"Could not add null element");
+        }
+
+    }
+
+    public T? Single<T>(Expression<Func<T, bool>>? expression)
+    {
+        try
+        {
+
+            // Hämta fälten Propertierna etc.
+            var fieldInfo = GetType()
+                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+                .FirstOrDefault(f => f.FieldType == typeof(List<T>))
+                ?? throw new InvalidOperationException("Unsupported type");
+
+            // Hämta data som den innehåller
+            var value = fieldInfo.GetValue(this)
+                        ?? throw new InvalidDataException($"No data of found.");
+
+            // Omvandla till en IQueryable så att man kan använda lambda
+            // och filtrera innan datat hämtas istället för tvärtom
+            var collection = (IQueryable<T>)value;
+
+            if (expression is null) return collection.SingleOrDefault();
+            return collection.Where(expression).SingleOrDefault();
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+
+        }
+
+    }
 
 
 
     #endregion
 
 
+    #region Booking Methods
 
+    #endregion
 
 
     public IEnumerable<ICustomer> GetCustomers() => _customers;
     public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _vehicles;
    
-    public IEnumerable<IBooking> GetBookings() => _bookings; 
+    public IEnumerable<IBooking> GetBookings() => _bookings;
 
-
-
+    
 }
