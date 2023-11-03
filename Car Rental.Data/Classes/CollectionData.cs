@@ -4,6 +4,7 @@ using Car_Rental.Common.Interfaces;
 using Car_Rental.Common.Enums;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Car_Rental.Data.Classes;
 
@@ -51,10 +52,10 @@ public class CollectionData : IData
 
         #region Customers
 
-        var customer1 = new Customer(1, 820512, "John", "Doe");
-        var customer2 = new Customer(2, 801212, "Lucky", "Luke");
-        var customer3 = new Customer(3, 581201, "John", "Snow");
-        var customer4 = new Customer(4, 900126, "Louise", "Lane");
+        var customer1 = new Customer(1, "820512", "John", "Doe");
+        var customer2 = new Customer(2, "801212", "Lucky", "Luke");
+        var customer3 = new Customer(3, "581201", "John", "Snow");
+        var customer4 = new Customer(4, "900126", "Louise", "Lane");
 
         _customers.Add(customer1);
         _customers.Add(customer2);
@@ -70,7 +71,7 @@ public class CollectionData : IData
         
         (DateTime startBook1, DateTime endBook1) = BookingDates(new DateTime(2023, 6, 12), new DateTime(2023, 6, 13));
         numberOfDays = DaysRented(startBook1, endBook1);
-        int kmReturned1 = KmAmount(400);
+        double kmReturned1 = KmAmount(400);
         var cost1 = CostCalculator(vehicle1, endBook1);
 
         var b1 = new Booking(
@@ -91,8 +92,8 @@ public class CollectionData : IData
 
         (DateTime startBook2, DateTime endBook2) = BookingDates(new DateTime(2023, 6, 12), DateTime.MinValue);
         numberOfDays = DaysRented(startBook2, endBook2);
-        int kmReturned2 = KmAmount(0);
-        var cost2 = CostCalculator(vehicle1, endBook2);
+        double kmReturned2 = KmAmount(0);
+        double cost2 = CostCalculator(vehicle1, endBook2);
         var b2 = new Booking
             (
                            2,
@@ -148,10 +149,10 @@ public class CollectionData : IData
         return totalDays;
     }
 
-    int CostCalculator(IVehicle vehicle, DateTime endBook)
+    double CostCalculator(IVehicle vehicle, DateTime endBook)
     {
        
-        int cost = 0;
+        double cost = 0;
         
         if ( endBook == DateTime.MinValue )
         {
@@ -206,11 +207,22 @@ public class CollectionData : IData
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>))
                 ?? throw new InvalidOperationException($"No type of {typeof(T)} found.");
 
-        var list = (IQueryable<T>)entity;
+        // TODO : Varför fungerade inte IQueryable och varför var denna tvungen att castas som List<T> ?
+        var value = (List<T>)fieldInfo.GetValue(this)
+                        ?? throw new InvalidDataException($"No data of found.");
 
-        if(entity is not null)
+        // var list = (IQueryable<T>)entity;
+
+
+
+
+        /// TDO Varför fungera inte den code blocket under?
+        //   value.Add(entity); /* Är det för att den kollar på value.add funktionen och inte entity variabeln? */
+        //    ?? throw new ArgumentNullException($"Could not add null element");
+
+        if (entity is not null)
         {
-           list.ToList().Add(entity);
+           value.Add(entity);
         }
         else
         {
@@ -245,7 +257,7 @@ public class CollectionData : IData
         catch (Exception ex)
         {
 
-            throw;
+            throw ex;
 
         }
 

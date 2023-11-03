@@ -15,46 +15,101 @@ public class BookingProcessor
 
     #endregion
 
+    #region Props
+    public string ErrorMessage { get; set; } = string.Empty; //Om den inte sätts till empty blir den null per default.
+    #endregion
+
+
+
+
+
+    //public Booking NewBooking = new();
+
 
     #region Customer
+
+    //TODO : Varför gick det inte att skapa ny instans/object utav customer utan att skapa tom konstruktor
+
+    public Customer NewCustomer = new();
+
+
+
 
     public IEnumerable<ICustomer> GetCustomers() => _db.GetCustomers().OrderBy(c => c.LastName);
     public ICustomer? GetCustomer(int ssn) => _db.Single<ICustomer>(c => c.Id.Equals(ssn));
 
-    public void AddCustomer(int socialSecurityNumber, string firstName, string
+    public void AddCustomer(string socialSecurityNumber, string firstName, string
     lastName)
     {
+         ErrorMessage = string.Empty;
+         socialSecurityNumber = socialSecurityNumber ?? string.Empty; 
+         firstName = firstName ?? string.Empty; 
+         lastName = lastName ?? string.Empty;
 
-        _db.Add<ICustomer>(new Customer(_db.NewCustomerId, socialSecurityNumber, firstName, lastName));
-       
+        if(socialSecurityNumber.Trim().Length.Equals(0) || socialSecurityNumber.Trim().Length != 6 || socialSecurityNumber == default 
+            || firstName.Trim().Length.Equals(0) || lastName.Trim().Length.Equals(0) || firstName == default || lastName == default )
+        {
+            ErrorMessage = "Could not add customer: One of the fields seems to be empty";
+            
+            if (socialSecurityNumber == default || socialSecurityNumber.Length != 6)
+            {
+                ErrorMessage += ": Invalid Social Security Number or Wrong Fromat ( YYMMDD )";
+                NewCustomer.SocialSecurityNumber = string.Empty;
+            }
+        }
+        else
+        {
+            _db.Add<ICustomer>(new Customer(_db.NewCustomerId, socialSecurityNumber, firstName, lastName));
+            NewCustomer = new();
+        }
+        
     }
 
 
     #endregion
-    
+
 
 
     #region Vehicles
-
+    public Vehicle NewVehicle = new();
+    public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _db.GetVehicles();
+    public IVehicle? GetVehicle(int vehicleId) => _db.Single<IVehicle>(v => v.Id.Equals(vehicleId));
+    public IVehicle? GetVehicle(string regNo) => _db.Single<IVehicle>(v => v.RegNo.Equals(regNo));
     public void AddVehicle(VehiclesMake make, string registrationNumber, double
-    odometer, double costKm, VehicleStatuses status, VehiclesTypes type)
+    odometer, double costKm, double costDay, VehicleStatuses status, VehiclesTypes type)
     {
         
+        ErrorMessage = string.Empty;
+        registrationNumber = registrationNumber.ToUpper();
 
+        try
+        {
+            if (registrationNumber.Trim().Length.Equals(0) || registrationNumber.Trim().Length != 6 || registrationNumber == default
+              || make == default || costKm == default || type == default)
+            {
+                ErrorMessage = "Couldn't add Vechicle: One of the fields seems to be missing information";
+            }
+            else
+            { 
+                if(type is VehiclesTypes.Motorcycle)
+                _db.Add<IVehicle>(new Motorcycle(_db.NewVehicleId,  registrationNumber, make, type, odometer, costKm, costDay, status));
+                else
+                _db.Add<IVehicle>(new Car(_db.NewVehicleId, registrationNumber, make, type, odometer, costKm, costDay, status));
+
+            }
+            NewCustomer = new();
+        }
+        catch (Exception ex) 
+        { 
+        
+            ErrorMessage = ex.Message;
+        
+        }
+       
 
     }
 
-
-    public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _db.GetVehicles();
-    
-    public IVehicle? GetVehicle(int vehicleId) { 
-        return (IVehicle?)GetVehicles(); 
-    }
-    public IVehicle? GetVehicle(string regNo) { 
-        return (IVehicle)GetVehicles(); 
-    }
-
-    #endregion
+     #endregion
 
 
 

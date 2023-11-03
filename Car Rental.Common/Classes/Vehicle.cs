@@ -9,24 +9,28 @@ namespace Car_Rental.Common.Classes
         #region Properties
         public int Id { get; init; }
 
-        public string RegNo { get; init; }
+        public string RegNo { get; set; }
 
-        public VehiclesMake VehicleMake { get; }
+        public VehiclesMake VehicleMake { get; set; }
 
-        public VehiclesTypes VehicleType { get; }
+        public VehiclesTypes VehicleType { get; set; }
 
-        public int Odometer { get; init; }
+        public double Odometer { get; set; }
 
-        public int CostKm { get; init; }
+        public double CostKm { get; set; }
 
-        public int CostDay { get; init; }
+        public double CostDay { get; set; }
 
         public VehicleStatuses VStatus { get; set; }
         #endregion
 
         #region Constructors
+        public Vehicle()
+        {
+            
+        }
 
-        public Vehicle(int id, string regNo, VehiclesMake vMake, VehiclesTypes vType, int odometer, int costKm, int costDay, VehicleStatuses vStatus)
+        public Vehicle(int id, string regNo, VehiclesMake vMake, VehiclesTypes vType, double odometer, double costKm, double costDay, VehicleStatuses vStatus)
          => (Id, RegNo, VehicleMake, VehicleType, Odometer, CostKm, CostDay, VStatus) = (id, regNo, vMake, vType, odometer, costKm, costDay, vStatus);
 
         #endregion

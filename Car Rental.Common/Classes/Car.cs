@@ -19,10 +19,10 @@ public class Car : Vehicle
 
     #region With VehicleStatuses
 
-    public Car(int id, string regNo, VehiclesMake vmake, VehiclesTypes vType, int odometer, int costKm, int costDay, VehicleStatuses vStatus)
+    public Car(int id, string regNo, VehiclesMake vmake, VehiclesTypes vType, double odometer, double costKm, double costDay, VehicleStatuses vStatus)
     : base(id, regNo, vmake, vType, odometer, costKm, costDay, vStatus) { }
 
-    public Car(int carId, int id, string regNo, VehiclesMake vmake, VehiclesTypes vType, int odometer, int costKm, int costDay, VehicleStatuses vStatus)
+    public Car(int carId, int id, string regNo, VehiclesMake vmake, VehiclesTypes vType, double odometer, double costKm, double costDay, VehicleStatuses vStatus)
     : base(id, regNo, vmake, vType, odometer, costKm, costDay, vStatus) => (carId) = (CarID);
 
 

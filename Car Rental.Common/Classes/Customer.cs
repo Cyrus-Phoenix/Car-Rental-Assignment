@@ -7,14 +7,17 @@ public class Customer : ICustomer
 {
     public int Id { get; set; }
 
-    public int SocialSecurityNumber { get; set; }
+    //TODO : Ändra den till sträng eller kanske datetime för att slippa omvandla från int till string för formateringens skull. Fråga Jonas om var omvandlingen skall ske
+    public string SocialSecurityNumber { get; set; }
 
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
 
-    public Customer( int id, int ssn, string fName, string lName ) 
-        => ( Id,SocialSecurityNumber, FirstName, LastName ) = (id, ssn, fName, lName );
+    
+    public Customer() { }
+    public Customer( int id, string ssn, string fName, string lName ) 
+        => ( Id, SocialSecurityNumber, FirstName, LastName ) = (id, ssn, fName, lName );
 
 
     

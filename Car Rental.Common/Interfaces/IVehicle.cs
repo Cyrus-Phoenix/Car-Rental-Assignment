@@ -12,17 +12,17 @@ namespace Car_Rental.Common.Interfaces
 
         public int Id { get; init; }
 
-        public string RegNo { get; init; }
+        public string RegNo { get; set; }
 
         public VehiclesMake VehicleMake { get; }
 
         public VehiclesTypes VehicleType { get; }
 
-        public int Odometer { get; init; }
+        public double Odometer { get; set; }
 
-        public int CostKm { get; init; }
+        public double CostKm { get; set; }
 
-        public int CostDay { get; init; }
+        public double CostDay { get; set; }
 
         public VehicleStatuses VStatus { get; }
 

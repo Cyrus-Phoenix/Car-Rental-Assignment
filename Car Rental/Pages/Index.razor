@@ -2,9 +2,33 @@
 @using Business.Classes
 @inject BookingProcessor b
 
-<PageTitle>Car Rental Assignment - G</PageTitle>
+<PageTitle>Car Rental Assignment - VG</PageTitle>
 
-<h1>Car Rental Assignment - G</h1>
+<h1>Car Rental Assignment - VG</h1>
+
+<!-- SVG Block -->
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+    </symbol>
+    <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+    </symbol>
+    <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+    </symbol>
+</svg>
+
+
+
+<!-- Error Message -->
+@if (b.ErrorMessage != string.Empty)
+{
+    <div class="mb-4 alert alert-danger" style="height: 40%">
+        <strong>Error</strong> @b.ErrorMessage
+    </div>
+}
 
 
 <!-- Vehicles  -->
@@ -13,30 +37,42 @@
     <table class="table border border-black">
         <thead class="table-dark">
             <tr>
-                <td>  <input type="text" class="form-control" placeholder="RegNo"></td>
+                <td>  <input type="text" class="form-control" placeholder="RegNo" @bind="b.NewVehicle.RegNo"></td>
                 <td>
-                    <select class="form-select border border-dark">
+                    <select class="form-select border border-dark" @bind="b.NewVehicle.VehicleMake">
                         <option value="" selected></option>
-                        @foreach (var vehiclemake in b.GetVehicles())
+                        @foreach (var vehiclemake in b.VehicleMakeNames)
                         {
-                           <option value="@b.GetVehicles()">@vehiclemake.VehicleMake</option>
+                           <option value="@b.GetVehiclesMake(vehiclemake)">@vehiclemake</option>
                         }
                     </select>
                 </td>
                 <td>
-                    <select class="form-select border border-dark">
+                    <select class="form-select border border-dark" @bind="b.NewVehicle.VehicleType">
                         <option value="" selected></option>
-                        @foreach (var vehicletype in b.GetVehicles())
+                        @foreach (var vehicletype in b.VehicleTypeNames)
                         {
-                            <option value="@b.GetVehicles()">@vehicletype.VehicleType</option>
+                            <option value="@b.GetVehiclesType(vehicletype)">@vehicletype</option>
                         }
                     </select>
                 </td>
-                <td>  <input type="text" class="form-control" placeholder="Odometer"></td>
-                <td>  <input type="text" class="form-control" placeholder="Cost/Km"></td>
-                <td>  <input type="text" class="form-control" placeholder="Cost/Day"></td>
+               
+                <td>  <input type="text" class="form-control" placeholder="Odometer" @bind="b.NewVehicle.Odometer"></td>
+                <td>  <input type="text" class="form-control" placeholder="Cost/Km" @bind="b.NewVehicle.CostKm"></td>
+                <td>  <input type="text" class="form-control" placeholder="Cost/Day" @bind="b.NewVehicle.CostDay"></td>
+                <td>
+                    <div class="badge bg-warning d-lg-table-cell" role="alert">
+                       
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+                        <div>
+                            Processing
+                        </div>
 
-                <td> <input class="btn btn-primary" type="submit" value="Add"></td>
+                    </div>
+
+                </td>
+                <td> <input class="btn btn-primary" type="submit" value="Add" @onclick="() => b.AddVehicle( b.NewVehicle.VehicleMake, b.NewVehicle.RegNo, b.NewVehicle.Odometer, b.NewVehicle.CostKm, b.NewVehicle.CostDay ,b.NewVehicle.VStatus, b.NewVehicle.VehicleType)"></td>
+                <td></td>
             </tr>
             <tr>
                 <th scope="col">RegNo</th>
@@ -46,6 +82,9 @@
                 <th scope="col">Cost/Km</th>
                 <th scope="col">Cost/Day</th>
                 <th scope="col">Status</th>
+                <th></th>
+                <th></th>
+
             </tr>
         </thead>
 
@@ -63,6 +102,12 @@
                     @*<td>@vehicle.VStatus</td>*@
                     @* Code the logic for switching available or Booked with ternary expression? *@
                     <td><span class="badge rounded-pill text-bg-@(vehicle.VStatus > 0 ? "danger" : "dark")">@vehicle.VStatus</span></td>
+                    <td>
+                        <input class="btn btn-primary" type="submit" value= "Rent">
+                 
+
+                    </td>
+                    
                     @*
                     @if(vehicle.VStatus > 0) {
                     <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
@@ -154,7 +199,7 @@
 
 <div class="container">
     <h4><strong>Customer</strong></h4>
-    <table class="table border border-black" style="max-width: 40%">
+    <table class="table border border-black" style= " max-width:60% ">
         <thead class="table-dark" >
             <tr>
                 <th scope="col">SSN</th>
@@ -166,10 +211,10 @@
         
         <tbody>
             <tr>
-                <td>  <input type="date" class="form-control" placeholder="DateOfBirth"></td>
-                <td> <input type="text" class="form-control" placeholder="Last Name"></td>
-                <td>  <input type="text" class="form-control" placeholder="First Name"></td>
-                <td> <input class="btn btn-primary" type="submit" value="Submit"></td>
+                <td>  <input type="text" class="form-control" placeholder="YYMMDD" @bind="b.NewCustomer.SocialSecurityNumber"></td>
+                <td>  <input type="text" class="form-control" placeholder="First Name" @bind="b.NewCustomer.FirstName"></td>
+                <td> <input type="text" class="form-control" placeholder="Last Name" @bind="b.NewCustomer.LastName"></td>
+                <td> <input class="btn btn-primary" type="submit" value="Add" @onclick="() => b.AddCustomer(b.NewCustomer.SocialSecurityNumber, b.NewCustomer.FirstName, b.NewCustomer.LastName)"></td>
             </tr>
             @foreach (var customer in b.GetCustomers())
             {
@@ -185,7 +230,3 @@
         
     </table>
 </div>
-
-
-
-}

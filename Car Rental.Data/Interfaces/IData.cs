@@ -31,10 +31,7 @@ namespace Car_Rental.Data.Interfaces
         public IEnumerable<IBooking> GetBookings();
 
 
-       // int NewCustomerId { get;}
-       // public int NewVehicleId { get;}
-       // public int NewBookingId { get;}
-
+      
         //IBooking RentVehicle(int vehicleId, int customerId);
         //IBooking ReturnVehicle(int vehicleId);
 
