@@ -32,7 +32,7 @@ namespace Car_Rental.Data.Interfaces
 
 
       
-        //IBooking RentVehicle(int vehicleId, int customerId);
+        IBooking RentVehicle(int vehicleId, int customerId);
         //IBooking ReturnVehicle(int vehicleId);
 
 
@@ -42,7 +42,7 @@ namespace Car_Rental.Data.Interfaces
         public string[] VehicleTypeNames => Enum.GetNames(typeof(VehiclesTypes));// Retunera enum konstanterna
         public string[] VehicleMakeNames => Enum.GetNames(typeof(VehiclesMake));// Retunera enum konstanterna
 
-        //TODO: Fråga om varför den måste "castas"
+        //TODO: Fråga om varför den måste "castas" ? Den castas pga att Parse vill ha en object och då måste man ange vad för dadatyp objecten blir när den kommer in.
         public VehiclesTypes GetVehicleType(string name) => (VehiclesTypes)Enum.Parse(typeof(VehiclesTypes), name); // Retunera en enum konstants värde med hjälp av konstantens namn
         public VehiclesMake GetVehicleMake(string name) => (VehiclesMake)Enum.Parse(typeof(VehiclesMake), name); // Retunera en enum konstants värde med hjälp av konstantens namn
     }

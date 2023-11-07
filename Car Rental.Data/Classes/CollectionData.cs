@@ -1,6 +1,7 @@
 ﻿using Car_Rental.Data.Interfaces;
 using Car_Rental.Common.Classes;
 using Car_Rental.Common.Interfaces;
+using Car_Rental.Common.Extensions;
 using Car_Rental.Common.Enums;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -23,9 +24,6 @@ public class CollectionData : IData
     public int NewVehicleId => _vehicles.Count.Equals(0) ? 1 : _vehicles.Max(id => id.Id) + 1; 
     public int NewCustomerId => _customers.Count.Equals(0) ? 1 : _customers.Max(id => id.Id) + 1; 
     public int NewBookingId => _bookings.Count.Equals(0) ? 1 : _bookings.Max(id => id.Id) + 1; 
-
-   
-    //TODO skapa logiken för att skapa nya bokningar, personer, fordon
 
 
     #endregion
@@ -151,10 +149,10 @@ public class CollectionData : IData
 
     double CostCalculator(IVehicle vehicle, DateTime endBook)
     {
-       
+
         double cost = 0;
-        
-        if ( endBook == DateTime.MinValue )
+
+        if (endBook == DateTime.MinValue)
         {
             return cost;
         }
@@ -165,8 +163,8 @@ public class CollectionData : IData
 
     #endregion
 
-    
-    
+
+
     #region Generic Methods
 
 
@@ -207,18 +205,18 @@ public class CollectionData : IData
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>))
                 ?? throw new InvalidOperationException($"No type of {typeof(T)} found.");
 
-        // TODO : Varför fungerade inte IQueryable och varför var denna tvungen att castas som List<T> ?
+        // TODO : Varför fungerade inte IQueryable och varför var denna tvungen att castas som List<T> ? IQueryable är filtrering och metoden i dethär faller vill lägga till något och inte filtrera.
         var value = (List<T>)fieldInfo.GetValue(this)
                         ?? throw new InvalidDataException($"No data of found.");
-
+        
         // var list = (IQueryable<T>)entity;
 
 
 
 
         /// TDO Varför fungera inte den code blocket under?
-        //   value.Add(entity); /* Är det för att den kollar på value.add funktionen och inte entity variabeln? */
-        //    ?? throw new ArgumentNullException($"Could not add null element");
+         // value.Add(entity) /* Är det för att den kollar på value.add funktionen och inte entity variabeln? */
+          // ?? throw new ArgumentNullException($"Could not add null element");
 
         if (entity is not null)
         {
@@ -269,6 +267,27 @@ public class CollectionData : IData
 
 
     #region Booking Methods
+
+    public IBooking RentVehicle(int vehicleId, int customerId)
+    {
+        Booking booking;
+        var vehicle = Single<IVehicle>(v => v.Id == vehicleId);
+        var customer = Single<ICustomer>(c => c.Id == customerId);
+
+        if (vehicle is not null && customer != null)
+        {
+            return booking = new(NewBookingId,customer,vehicle);
+        }
+        else
+            throw new Exception("Couldn't complete the booking");
+        
+    }
+
+    //public IBooking ReturnVehicle(int vehicleId, int customerId)
+    //{
+        
+    //}
+
 
     #endregion
 

@@ -3,6 +3,7 @@ using Car_Rental.Common.Enums;
 using Car_Rental.Common.Interfaces;
 using Car_Rental.Data.Interfaces;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Car_Rental.Business.Classes;
 
@@ -10,6 +11,8 @@ public class BookingProcessor
 {
     #region Variabel & Constructor
     
+    public bool _isTaskRunning = false;
+
     private readonly IData _db;
     public BookingProcessor(IData data) => _db = data;
 
@@ -20,23 +23,14 @@ public class BookingProcessor
     #endregion
 
 
-
-
-
-    //public Booking NewBooking = new();
-
-
     #region Customer
 
-    //TODO : Varför gick det inte att skapa ny instans/object utav customer utan att skapa tom konstruktor
+    //TODO : Varför gick det inte att skapa ny instans/object utav customer utan att skapa tom konstruktor ? Om du har fält så måste du fylla i det i " new(); " exempel new(id, name etc);
 
     public Customer NewCustomer = new();
 
-
-
-
     public IEnumerable<ICustomer> GetCustomers() => _db.GetCustomers().OrderBy(c => c.LastName);
-    public ICustomer? GetCustomer(int ssn) => _db.Single<ICustomer>(c => c.Id.Equals(ssn));
+    
 
     public void AddCustomer(string socialSecurityNumber, string firstName, string
     lastName)
@@ -69,12 +63,10 @@ public class BookingProcessor
     #endregion
 
 
-
     #region Vehicles
     public Vehicle NewVehicle = new();
     public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _db.GetVehicles();
-    public IVehicle? GetVehicle(int vehicleId) => _db.Single<IVehicle>(v => v.Id.Equals(vehicleId));
-    public IVehicle? GetVehicle(string regNo) => _db.Single<IVehicle>(v => v.RegNo.Equals(regNo));
+   
     public void AddVehicle(VehiclesMake make, string registrationNumber, double
     odometer, double costKm, double costDay, VehicleStatuses status, VehiclesTypes type)
     {
@@ -109,21 +101,64 @@ public class BookingProcessor
 
     }
 
-     #endregion
+    #endregion
+
+
+    #region Booking
+
+    //public Booking NewBooking = new();
+    public IEnumerable<IBooking> GetBookings() => _db.GetBookings();
+    public IVehicle? GetVehicle(int vehicleId) => _db.Single<IVehicle>(v => v.Id.Equals(vehicleId));
+    public IVehicle? GetVehicle(string regNo) => _db.Single<IVehicle>(v => v.RegNo.Equals(regNo));
+    public ICustomer? GetCustomer(int ssn) => _db.Single<ICustomer>(c => c.Id.Equals(ssn));
+
+
+    public async Task<IBooking> AsyncBooking(int vehicleId, int customerId)
+    {
+        try
+        {
+            _isTaskRunning = true;
+
+            await Task.Delay(1000);
+            var booking = _db.RentVehicle(vehicleId, customerId);
+            _db.Add(booking);
+
+            _isTaskRunning = false;
+
+            return booking;
+        }
+        catch (Exception  e)
+        {
+            throw new Exception(e.Message);
+        }
 
 
 
+    }
 
     //public lägg till asynkron returdata typ RentVehicle(int vehicleId, int
     // customerId)
     //{
+
     //    // Använd Task.Delay för att simulera tiden det tar 
     //    // att hämta data från ett API.
+
+    //     // AWAIT TASK.DELAY (1000)
     //}
 
-    // public IBooking ReturnVehicle(int vehicleId, double ditance) { }
-
+     //public IBooking ReturnVehicle(int vehicleId, double ditance)
+     //{
+        
     
+     //}
+
+
+
+    #endregion
+
+
+
+
     // Calling Default Interface Methods
     public string[] VehicleStatusNames => _db.VehicleStatusNames;
     public string[] VehicleTypeNames => _db.VehicleTypeNames;
@@ -133,7 +168,7 @@ public class BookingProcessor
 
 
   
-  // public IEnumerable<IBooking> GetBookings() => _db.GetBookings();
+
 
 
 

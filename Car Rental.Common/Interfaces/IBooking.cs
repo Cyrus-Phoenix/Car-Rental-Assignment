@@ -19,6 +19,7 @@ namespace Car_Rental.Common.Interfaces
         public DateTime Start { get; init; }
         public DateTime? End { get; init; }
         public double Cost { get; init; }
+
        // public int KmRented { get; init; }
         public double KmReturned { get; init; }
         public DateTime days { get; init; }

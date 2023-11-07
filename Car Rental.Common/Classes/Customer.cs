@@ -7,7 +7,7 @@ public class Customer : ICustomer
 {
     public int Id { get; set; }
 
-    //TODO : Ändra den till sträng eller kanske datetime för att slippa omvandla från int till string för formateringens skull. Fråga Jonas om var omvandlingen skall ske
+    //TODO : EJ VIKTIG, Ändra den till sträng eller kanske datetime för att slippa omvandla från int till string för formateringens skull. Fråga Jonas om var omvandlingen skall ske
     public string SocialSecurityNumber { get; set; }
 
     public string FirstName { get; set; }
