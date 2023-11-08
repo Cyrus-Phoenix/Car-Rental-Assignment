@@ -18,15 +18,6 @@ public static class BookingExtensions
         booking.Cost = VehicleExtensions.DaysCalculator(booking.Start, booking.End) * booking.Vehicle.CostDay + booking.Vehicle.CostKm * kmReturned;
     }
 
-    //public static double DaysCalculator( DateTime startBook, DateTime endBook)
-    //{
-
-    //    TimeSpan numberOfDays = endBook - startBook;
-    //    double totalDays = (double)numberOfDays.TotalDays;
-    //    return totalDays < 1 ? 1 : totalDays;
-        
-    //}
-
     #endregion
 
 }

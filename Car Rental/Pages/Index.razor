@@ -63,19 +63,25 @@
                 <td>
                     @if (b._isTaskRunning)
                     {
-                        <div class="badge bg-warning d-lg-table-cell" role="alert">
-                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-                            <div>
+                        <div class="badge bg-warning d-lg-table-cell d-flex flex-row" role="alert">
+                          @* <svg class="bi flex-row flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+                        *@  <div>
                                 Processing Booking
                             </div>
-
+                            @if (b._isTaskRunning)
+                            {
+                                <div class="spinner-border" role="status">
+                                    <span class="sr-only"></span>
+                                </div>
+                            }
                         </div>
                     }
                 </td>
                 <td> <input class="btn btn-primary form-control" type="submit" disabled="@b._isTaskRunning" value="Add" @onclick="() => b.AddVehicle( b.NewVehicle.VehicleMake, b.NewVehicle.RegNo, b.NewVehicle.Odometer, b.NewVehicle.CostKm, b.NewVehicle.CostDay ,b.NewVehicle.VStatus, b.NewVehicle.VehicleType)"></td>
                 <td></td>
                 <td></td>
-
+               
+                
             </tr>
             <tr>
                 <th scope="col">RegNo</th>

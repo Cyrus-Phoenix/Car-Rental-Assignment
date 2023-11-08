@@ -1,10 +1,7 @@
 ﻿using Car_Rental.Common.Classes;
 using Car_Rental.Common.Enums;
-using Car_Rental.Common.Extensions;
 using Car_Rental.Common.Interfaces;
 using Car_Rental.Data.Interfaces;
-using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Car_Rental.Business.Classes;
 
@@ -67,6 +64,7 @@ public class BookingProcessor
 
 
     #region Vehicles
+
     public Vehicle NewVehicle = new();
     public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) // => _db.GetVehicles(status);
     {
@@ -158,8 +156,8 @@ public class BookingProcessor
 
      public void ReturnVehicle(int vehicleId, double kmReturned)
      {
+
         var booking = _db.ReturnVehicle(vehicleId, kmReturned);
-       // BookingExtensions.Return(booking, kmReturned);
         NewBooking.KmReturned = default;
      
      }

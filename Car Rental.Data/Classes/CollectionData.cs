@@ -10,11 +10,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Car_Rental.Data.Classes;
-
-/*
- Have to contain all the Data
- */
-
 public class CollectionData : IData
 {
     readonly List<IVehicle> _vehicles = new();
@@ -30,9 +25,6 @@ public class CollectionData : IData
 
     #endregion
 
-
-    int numberOfDays;
-   // int kmReturned;
 
     public CollectionData()
     {
@@ -68,8 +60,6 @@ public class CollectionData : IData
         #region Booking
 
 
-
-      //TODO : Varför startar den som bookad när bokning avslutas här?
         var b1 = new Booking( 1 , customer2, vehicle3 );
         _bookings.Add(b1);
         BookingExtensions.Return(b1, 100);
@@ -77,7 +67,6 @@ public class CollectionData : IData
 
         var b2 = new Booking( 2, customer1, vehicle1 ) ;
         _bookings.Add(b2);
-        BookingExtensions.Return(b2, 500);
 
 
 
@@ -86,52 +75,7 @@ public class CollectionData : IData
     }
     
 
-    #region All Methods
-
-    //int KmAmount(int km)
-    //{
-    //    kmReturned = km;
-    //    return kmReturned;
-    //}
-
-
-    #region Old Way of typing method
-
-    //(DateTime, DateTime) BookingDates(DateTime startingDate, DateTime endingDate) 
-    //{ 
-    //    return (startingDate, endingDate);
-    //}
-    #endregion
-
-
-    //(DateTime, DateTime) BookingDates(DateTime startingDate, DateTime endingDate) 
-    //=>  (startingDate, endingDate);
-
-
-    //int DaysRented(DateTime startBook, DateTime endBook)
-    //{
-    //    TimeSpan days = startBook - endBook;
-    //    int totalDays = days.Days;
-    //    return totalDays;
-    //}
-
-    //double CostCalculator(IVehicle vehicle, DateTime endBook)
-    //{
-
-    //    double cost = 0;
-
-    //    if (endBook == DateTime.MinValue)
-    //    {
-    //        return cost;
-    //    }
-    //    cost = (numberOfDays * vehicle.CostDay) + (kmReturned * vehicle.CostKm);
-    //    return cost;
-
-    //}
-
-    #endregion
-
-
+    //TODO : Se mer på generics och generics lektions videon.
 
     #region Generic Methods
 
@@ -170,6 +114,7 @@ public class CollectionData : IData
                ?? throw new InvalidOperationException($"No list of type {typeof(T)} found.");
 
             if (expression is null) return values;
+
             // Execute the Compiled Lambda: You can now execute the compiled lambda expression as if it were a regular function: enligt chatgpt
             return values.Where(expression.Compile()).ToList();
 
@@ -287,7 +232,7 @@ public class CollectionData : IData
     }
 
 
-    //TODO : Fixa Return metoden och hela den funktionen för programmet.
+ 
 
     public IBooking ReturnVehicle(int vehicleId, double kmReturned)
     {
@@ -308,10 +253,10 @@ public class CollectionData : IData
     #endregion
 
 
-    public IEnumerable<ICustomer> GetCustomers() => _customers;
-    public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _vehicles;
+    //public IEnumerable<ICustomer> GetCustomers() => _customers;
+    //public IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default) => _vehicles;
    
-    public IEnumerable<IBooking> GetBookings() => _bookings;
+    //public IEnumerable<IBooking> GetBookings() => _bookings;
 
     
 }

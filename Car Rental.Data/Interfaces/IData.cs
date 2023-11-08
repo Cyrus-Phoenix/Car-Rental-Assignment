@@ -26,12 +26,7 @@ namespace Car_Rental.Data.Interfaces
          T? Single<T>(Expression<Func<T, bool>>? expression);
          public void Add<T>(T entity);
 
-        //public IEnumerable<ICustomer> GetCustomers();
-        //public  IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default);
-        //public IEnumerable<IBooking> GetBookings();
 
-
-      
         IBooking RentVehicle(int vehicleId, int customerId);
         IBooking ReturnVehicle(int vehicleId, double kmReturned);
 
