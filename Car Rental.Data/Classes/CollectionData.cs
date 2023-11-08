@@ -6,6 +6,8 @@ using Car_Rental.Common.Enums;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Car_Rental.Data.Classes;
 
@@ -38,8 +40,8 @@ public class CollectionData : IData
 
         var vehicle1 = new Car(1, "ABC 123", (VehiclesMake)1, VehiclesTypes.Sedan, 5500, 5, 250, VehicleStatuses.Available);
         Car vehicle2 = new (2, "ABC 345", VehiclesMake.BMW, VehiclesTypes.Combi, 8500, 2, 140, VehicleStatuses.Available);
-        var vehicle3 = new Motorcycle(1, "DEF 123", (VehiclesMake)3, VehiclesTypes.Motorcycle, 500, 10, 300, VehicleStatuses.Available);
-        Motorcycle vehicle4 = new (2, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 1, 80, VehicleStatuses.Available);
+        var vehicle3 = new Motorcycle(3, "DEF 123", (VehiclesMake)3, VehiclesTypes.Motorcycle, 500, 10, 300, VehicleStatuses.Available);
+        Motorcycle vehicle4 = new (4, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 1, 80, VehicleStatuses.Available);
 
         _vehicles.Add(vehicle1);
         _vehicles.Add(vehicle2);
@@ -178,18 +180,37 @@ public class CollectionData : IData
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>))
                 ?? throw new InvalidOperationException("Unsupported type");
 
+
+            #region Code that didn't work
             // Hämta data som den innehåller
-            var value = fieldInfo.GetValue(this) 
-                        ?? throw new InvalidDataException($"No data of found.");
+            //var value = fieldInfo.GetValue(this)
+            //            ?? throw new InvalidDataException($"No data of found.");
 
-            // Omvandla till en IQueryable så att man kan använda lambda
-            // och filtrera innan datat hämtas istället för tvärtom
-            var collection = (IQueryable<T>)value;
-            
-            if(expression is null) return collection.ToList();
-            return collection.Where(expression).ToList();
+            //// Omvandla till en IQueryable så att man kan använda lambda
+            //// och filtrera innan datat hämtas istället för tvärtom
 
-            }
+            ////TODO :  Fråga varför (IQueryable<T>)value inte fungerade här?
+            //var collection = (IQueryable<T>)value;
+
+            //if (expression is null) return collection.ToList();
+            //return collection.Where(expression).ToList();
+
+            #endregion
+
+
+            #region Code that worked
+
+            var values = (List<T>)fieldInfo.GetValue(this)
+               ?? throw new InvalidOperationException($"No list of type {typeof(T)} found.");
+
+            if (expression is null) return values;
+            // Execute the Compiled Lambda: You can now execute the compiled lambda expression as if it were a regular function: enligt chatgpt
+            return values.Where(expression.Compile()).ToList();
+
+            #endregion
+          
+
+        }
         catch (Exception ex) {
 
             throw ex;
@@ -205,8 +226,8 @@ public class CollectionData : IData
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>))
                 ?? throw new InvalidOperationException($"No type of {typeof(T)} found.");
 
-        // TODO : Varför fungerade inte IQueryable och varför var denna tvungen att castas som List<T> ? IQueryable är filtrering och metoden i dethär faller vill lägga till något och inte filtrera.
-        var value = (List<T>)fieldInfo.GetValue(this)
+        // Varför fungerade inte IQueryable och varför var denna tvungen att castas som List<T> ? IQueryable är för filtrering och metoden i dethär fallet vill lägga till något och inte filtrera.
+        var list = (List<T>)fieldInfo.GetValue(this)
                         ?? throw new InvalidDataException($"No data of found.");
         
         // var list = (IQueryable<T>)entity;
@@ -220,7 +241,7 @@ public class CollectionData : IData
 
         if (entity is not null)
         {
-           value.Add(entity);
+           list.Add(entity);
         }
         else
         {
@@ -231,33 +252,49 @@ public class CollectionData : IData
 
     public T? Single<T>(Expression<Func<T, bool>>? expression)
     {
-        try
-        {
-
+       
             // Hämta fälten Propertierna etc.
             var fieldInfo = GetType()
                 .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>))
                 ?? throw new InvalidOperationException("Unsupported type");
 
+            //TODO : Fråga varför IQueryable inte gick här.
+            #region Code that didn't work
+
             // Hämta data som den innehåller
-            var value = fieldInfo.GetValue(this)
+            //var value = fieldInfo.GetValue(this)
+            //            ?? throw new InvalidDataException($"No data of found.");
+
+            //// Omvandla till en IQueryable så att man kan använda lambda
+            //// och filtrera innan datat hämtas istället för tvärtom
+            //var collection = (IQueryable<T>)value;
+
+            //if (expression is null) return collection.SingleOrDefault();
+            //return collection.Where(expression).SingleOrDefault();
+
+
+            #endregion
+
+        if(fieldInfo is not null) 
+        {
+            // Hämta data som den innehåller
+            var value = (List<T>)fieldInfo.GetValue(this)
                         ?? throw new InvalidDataException($"No data of found.");
 
-            // Omvandla till en IQueryable så att man kan använda lambda
-            // och filtrera innan datat hämtas istället för tvärtom
-            var collection = (IQueryable<T>)value;
-
-            if (expression is null) return collection.SingleOrDefault();
-            return collection.Where(expression).SingleOrDefault();
-
-        }
-        catch (Exception ex)
-        {
-
-            throw ex;
+            if (expression is not null) 
+            {
+                var entity = value.SingleOrDefault(expression.Compile());
+                if (entity is not null)
+                    return entity;
+            
+            }
+            throw new InvalidOperationException($"No matching element of type {typeof(T)} found.");
 
         }
+
+        throw new InvalidOperationException($"No type of {typeof(T)} found.");
+
 
     }
 

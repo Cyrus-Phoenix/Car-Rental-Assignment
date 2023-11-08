@@ -21,10 +21,10 @@ namespace Car_Rental.Common.Interfaces
         public double Cost { get; init; }
 
        // public int KmRented { get; init; }
-        public double KmReturned { get; init; }
+        public double KmReturned { get; set; }
         public DateTime days { get; init; }
 
-       // public VehicleStatuses VStatus { get; init; }
+        // public VehicleStatuses VStatus { get; init; }
 
 
 

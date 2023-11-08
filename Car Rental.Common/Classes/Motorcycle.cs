@@ -10,7 +10,7 @@ public class Motorcycle : Vehicle
     * In this case makes no sense to have this.
     */
 
-    int McID {  get; set; }
+    int McID {  get; init; }
 
     #region Constructors
     public Motorcycle(int id, string regNo, VehiclesMake vMake, VehiclesTypes vType, double odometer, double costKm, double costDay, VehicleStatuses vStatus)

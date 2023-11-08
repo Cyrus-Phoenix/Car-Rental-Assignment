@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Car_Rental.Common.Enums
 @using Business.Classes
 @inject BookingProcessor b
 
@@ -37,10 +38,10 @@
     <table class="table border border-black">
         <thead class="table-dark">
             <tr>
-                <td>  <input type="text" class="form-control" placeholder="RegNo" @bind="b.NewVehicle.RegNo"></td>
+                <td>  <input type="text" class="form-control" placeholder="RegNo" disabled="@b._isTaskRunning" @bind="b.NewVehicle.RegNo"></td>
                 <td>
-                    <select class="form-select border border-dark" @bind="b.NewVehicle.VehicleMake">
-                        <option value="" selected>Select Make</option>
+                    <select class="form-select border border-dark" disabled="@b._isTaskRunning" @bind="b.NewVehicle.VehicleMake">
+                    
                         @foreach (var vehiclemake in b.VehicleMakeNames)
                         {
                            <option value="@b.GetVehiclesMake(vehiclemake)">@vehiclemake</option>
@@ -48,27 +49,29 @@
                     </select>
                 </td>
                 <td>
-                    <select class="form-select border border-dark" @bind="b.NewVehicle.VehicleType">
-                        <option value="" selected>Select Type</option>
+                    <select class="form-select border border-dark" disabled="@b._isTaskRunning" @bind="b.NewVehicle.VehicleType">
+                       
                         @foreach (var vehicletype in b.VehicleTypeNames)
                         {
                             <option value="@b.GetVehiclesType(vehicletype)">@vehicletype</option>
                         }
                     </select>
                 </td>
-                <td>  <input type="text" class="form-control" placeholder="Odometer" @bind="b.NewVehicle.Odometer"></td>
-                <td>  <input type="text" class="form-control" placeholder="Cost/Km" @bind="b.NewVehicle.CostKm"></td>
-                <td>  <input type="text" class="form-control" placeholder="Cost/Day" @bind="b.NewVehicle.CostDay"></td>
+                <td>  <input type="text" class="form-control" placeholder="Odometer" disabled="@b._isTaskRunning" @bind="b.NewVehicle.Odometer"></td>
+                <td>  <input type="text" class="form-control" placeholder="Cost/Km" disabled="@b._isTaskRunning" @bind="b.NewVehicle.CostKm"></td>
+                <td>  <input type="text" class="form-control" placeholder="Cost/Day" disabled="@b._isTaskRunning" @bind="b.NewVehicle.CostDay"></td>
                 <td>
-                    <div class="badge bg-warning d-lg-table-cell" role="alert">
-                       
-                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
-                        <div>
-                            Processing
+                    @if (b._isTaskRunning)
+                    {
+                        <div class="badge bg-warning d-lg-table-cell" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill" /></svg>
+                            <div>
+
+                                Processing
+                            </div>
+
                         </div>
-
-                    </div>
-
+                    }
                 </td>
                 <td> <input class="btn btn-primary form-control" type="submit" value="Add" @onclick="() => b.AddVehicle( b.NewVehicle.VehicleMake, b.NewVehicle.RegNo, b.NewVehicle.Odometer, b.NewVehicle.CostKm, b.NewVehicle.CostDay ,b.NewVehicle.VStatus, b.NewVehicle.VehicleType)"></td>
                 <td></td>
@@ -85,13 +88,18 @@
                 <th scope="col">Status</th>
                 <th scope="col">
                     <td>
-                        <select class="form-select border border-dark" >
-                            <option value="Select Customer" selected></option>
+                        <!-- Customer selection for booking -->
+
+                    <select class="form-select border border-dark" disabled="@b._isTaskRunning" @bind="b.NewCustomer.Id">
+                        
                             @foreach (var customer in b.GetCustomers())
                             {
-                            <option value="@b.GetCustomers()">@customer.FirstName @customer.LastName  (@customer.SocialSecurityNumber)</option>
+
+                               <option value="@customer.Id">@customer.FirstName @customer.LastName (@customer.SocialSecurityNumber)</option>
+
                             }
-                        </select>
+                    </select>
+
                     </td>
                 </th>
                 <th></th>
@@ -102,7 +110,8 @@
 
         <tbody>
           
-             @foreach(var vehicle in b.GetVehicles()){
+             @foreach(var vehicle in b.GetVehicles())
+            {
                 <tr class="border table-borderless">
 
                     <td>@vehicle.RegNo</td>
@@ -111,15 +120,28 @@
                     <td>@vehicle.Odometer</td>
                     <td>@vehicle.CostKm</td>
                     <td>@vehicle.CostDay</td>
-                    @*<td>@vehicle.VStatus</td>*@
-                    @* Code the logic for switching available or Booked with ternary expression? *@
-                    <td><span class="badge rounded-pill text-bg-@(vehicle.VStatus > 0 ? "danger" : "dark")">@vehicle.VStatus</span></td>
-                    <td>
-                        <input class="btn btn-primary" type="submit" value= "Rent">
-                 
 
-                    </td>
-                    
+                    @if(vehicle.VStatus.Equals(VehicleStatuses.Available))
+                    {
+                        @* Code the logic for switching available or Booked with ternary expression? *@
+                        <td><span class="badge rounded-pill text-bg-@(vehicle.VStatus > 0 ? "danger" : "dark")">@vehicle.VStatus</span></td>
+                        <td>
+                            @* Booking button *@
+                            <input class="btn btn-primary" type="submit" value="rent" disabled="@b._isTaskRunning" @onclick="() => b.AsyncBooking(vehicle.Id, b.NewCustomer.Id)">
+                        </td>
+                    }
+                    else
+                    {
+                        @* Code the logic for switching available or Booked with ternary expression? *@
+                        <td><span class="badge rounded-pill text-bg-@(vehicle.VStatus > 0 ? "danger" : "dark")">@vehicle.VStatus</span></td>
+                        <td>
+                            <input type="text" class="form-control-sm" disabled="@b._isTaskRunning" @bind="b.NewBooking.KmReturned"/>
+                            @* Return button *@
+                            <input class="btn btn-primary" type="submit" value="return" disabled="@b._isTaskRunning">
+
+                        </td>
+                    }
+
                     @*
                     @if(vehicle.VStatus > 0) {
                     <td><span class="badge rounded-pill text-bg-danger">Booked</span></td>
@@ -147,7 +169,7 @@
 
 
 
-<!-- Booking  -->
+<!-- Booking Info  -->
 <div class="container">
     <h4><strong>Boookings</strong></h4>
     <table class="table border border-black">
@@ -167,24 +189,43 @@
         </thead>
         <tbody>
             
-            @foreach(var booking in b.GetBookings()){
-            <tr class="border table-borderless">
-                <th>@booking.Person.SocialSecurityNumber</th>
-                <th>@booking.Person.FirstName @booking.Person.LastName</th>
-                <th>@booking.Vehicle.RegNo</th>
-                <th>@booking.Vehicle.VehicleMake</th>
-                <td>@booking.Vehicle.Odometer</td>
-                <td>@booking.KmReturned</td>
-                <td>@booking.Start.ToString("MM/dd/yyyy")</td>
-                    <td>
-                        @if (booking.End != DateTime.MinValue)
-                        {
-                            @booking.End?.ToString("MM/dd/yyyy")
-                        }
-                    </td>
-                <td>@booking.Cost Kr</td>
+            @foreach(var booking in b.GetBookings())
+            {
+                @if (booking.Vehicle.VStatus.Equals(VehicleStatuses.Available))
+                {
+                    <tr class="border table-borderless">
+                        <th>@booking.Person.SocialSecurityNumber</th>
+                        <th>@booking.Person.FirstName @booking.Person.LastName</th>
+                        <th>@booking.Vehicle.RegNo</th>
+                        <th>@booking.Vehicle.VehicleMake</th>
+                        <td>@booking.Vehicle.Odometer</td>
+                        <td>@booking.KmReturned</td>
+                        <td>@booking.Start.ToString("MM/dd/yyyy")</td>
+                        <td>@booking.End?.ToString("MM/dd/yyyy")</td>
+                        <td>@booking.Cost Kr</td>
 
-                    <td><span class="badge rounded-pill text-bg-@(booking.Vehicle.VStatus > 0 ? "danger" : "success")">@booking.Vehicle.VStatus</span></td>
+
+                        <td><span class="badge rounded-pill text-bg-@(booking.Vehicle.VStatus.Equals(VehicleStatuses.Available) ? "success" : "danger")">@booking.Vehicle.VStatus</span></td>
+                    </tr>
+                }
+                else
+                {
+                     <tr class="border table-borderless">
+                        <th>@booking.Person.SocialSecurityNumber</th>
+                        <th>@booking.Person.FirstName @booking.Person.LastName</th>
+                        <th>@booking.Vehicle.RegNo</th>
+                        <th>@booking.Vehicle.VehicleMake</th>
+                        <td>@booking.Vehicle.Odometer</td>
+                        <td></td>
+                        <td>@booking.Start.ToString("MM/dd/yyyy")</td>
+                        <td></td>
+                        <td></td>
+                        <td><span class="badge rounded-pill text-bg-@(booking.Vehicle.VStatus > 0 ? "danger" : "success")">@booking.Vehicle.VStatus</span></td>
+                    </tr>
+                }
+
+                    
+           
                 @*
                     @if (booking.Vehicle.VStatus > 0)
                     {
@@ -196,7 +237,7 @@
                     }
 
                 *@
-            </tr>
+            
             }
           
         </tbody>

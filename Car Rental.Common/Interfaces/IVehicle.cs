@@ -10,23 +10,23 @@ namespace Car_Rental.Common.Interfaces
     public interface IVehicle
     {
 
-        public int Id { get; init; }
+         int Id { get; init; }
 
-        public string RegNo { get; set; }
+         string RegNo { get; set; }
 
-        public VehiclesMake VehicleMake { get; }
+         VehiclesMake VehicleMake { get; }
 
-        public VehiclesTypes VehicleType { get; }
+         VehiclesTypes VehicleType { get; }
 
-        public double Odometer { get; set; }
+         double Odometer { get; set; }
 
-        public double CostKm { get; set; }
+         double CostKm { get; set; }
 
-        public double CostDay { get; set; }
+         double CostDay { get; set; }
 
-        public VehicleStatuses VStatus { get; }
+        VehicleStatuses VStatus { get; }
 
-
+        void StatusSwitch(VehicleStatuses status);
 
     }
 }

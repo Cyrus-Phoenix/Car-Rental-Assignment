@@ -1,34 +1,32 @@
 ﻿using Car_Rental.Common.Enums;
 using Car_Rental.Common.Interfaces;
-using Car_Rental.Common.Classes;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 
 namespace Car_Rental.Common.Classes;
 
 public class Booking : IBooking
 {
+
     public int Id { get; set; }
     public ICustomer Person { get; }
     public IVehicle Vehicle { get; }
-
-   public string RegNo { get; }
-   // public VehiclesMake VehiclesMake { get; }
-
+    public string RegNo { get; }
     public DateTime Start { get; init; }
     public DateTime? End { get; init; }
     public double Cost { get; init; }
-
     public double KmRented { get; init; }
-    public double KmReturned { get; init; }
+    public double KmReturned { get; set; }
     public DateTime days { get; init; }
+    // public VehicleStatuses VStatus { get; init; }
 
-    public VehicleStatuses VStatus { get; init; }
- 
-    
+
+
+    #region Constructors
+
+    public Booking(){}
+
     public Booking(int id, ICustomer customer, IVehicle vehicle,   /*int customerSSN,  string customer, string regNo, VehiclesMake vehiclesMake,*/ double cost, /*int kmRented,*/ double kmReturned, DateTime start, DateTime end, VehicleStatuses vStatus)
-   => (Id, Person, Vehicle, /*CustomerSSN, Customer, RegNo, VehiclesMake,*/ Cost, /* KmRented, */ KmReturned, Start, End, VStatus)
-    = (id, customer, vehicle, /*customerSSN, customer, regNo, vehiclesMake,*/ cost, /* kmRented, */  kmReturned, start, end, VStatus);
+    => (Id, Person, Vehicle, /*CustomerSSN, Customer, RegNo, VehiclesMake,*/ Cost, /* KmRented, */ KmReturned, Start, End/*, VStatus*/)
+    = (id, customer, vehicle, /*customerSSN, customer, regNo, vehiclesMake,*/ cost, /* kmRented, */  kmReturned, start, end/*, VStatus*/);
 
     public Booking(int id, ICustomer customer, IVehicle vehicle)
     {
@@ -38,8 +36,14 @@ public class Booking : IBooking
         RegNo = vehicle.RegNo;
         Start = DateTime.Now;
         KmRented = vehicle.Odometer;
-        VStatus = VehicleStatuses.Booked;
+        //VStatus = VehicleStatuses.Booked;
+
+        //TODO : Varför behövde jag göra en metod för detta? Kort sagt varför fungera inte det ovan? Är det för att den sätter en ny status på själva bookingen?
+        vehicle.StatusSwitch(VehicleStatuses.Booked);
     }
+
+    #endregion
+
 
 
 

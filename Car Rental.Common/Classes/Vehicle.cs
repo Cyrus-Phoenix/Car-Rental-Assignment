@@ -36,8 +36,8 @@ namespace Car_Rental.Common.Classes
         #endregion
 
         #region Methods
-
-
+        
+        public void StatusSwitch(VehicleStatuses status) => VStatus = status;
 
         #endregion
 
