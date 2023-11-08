@@ -7,16 +7,25 @@ public class Booking : IBooking
 {
 
     public int Id { get; set; }
+
+    public VehicleStatuses BookingStatus { get; set; }
     public ICustomer Person { get; }
     public IVehicle Vehicle { get; }
-    public string RegNo { get; }
     public DateTime Start { get; init; }
-    public DateTime? End { get; init; }
-    public double Cost { get; init; }
-    public double KmRented { get; init; }
-    public double KmReturned { get; set; }
+    public DateTime End { get; set; }
     public DateTime days { get; init; }
+    public string RegNo { get; }
+    public double Cost { get; set; }
+    public double OdormeterRented { get; set; }
+    public double KmReturned { get; set; }
+    public double LastKnownOdometer { get; set; }
+
+
+    #region commented props
     // public VehicleStatuses VStatus { get; init; }
+    #endregion
+
+
 
 
 
@@ -24,10 +33,13 @@ public class Booking : IBooking
 
     public Booking(){}
 
-    public Booking(int id, ICustomer customer, IVehicle vehicle,   /*int customerSSN,  string customer, string regNo, VehiclesMake vehiclesMake,*/ double cost, /*int kmRented,*/ double kmReturned, DateTime start, DateTime end, VehicleStatuses vStatus)
-    => (Id, Person, Vehicle, /*CustomerSSN, Customer, RegNo, VehiclesMake,*/ Cost, /* KmRented, */ KmReturned, Start, End/*, VStatus*/)
-    = (id, customer, vehicle, /*customerSSN, customer, regNo, vehiclesMake,*/ cost, /* kmRented, */  kmReturned, start, end/*, VStatus*/);
+    #region Unused and commented Constructor
+    //public Booking(int id, ICustomer customer, IVehicle vehicle,   /*int customerSSN,  string customer, string regNo, VehiclesMake vehiclesMake,*/ double cost, /*int kmRented,*/ double kmReturned, DateTime start, DateTime end, VehicleStatuses vStatus)
+    //=> (Id, Person, Vehicle, /*CustomerSSN, Customer, RegNo, VehiclesMake,*/ Cost, /* KmRented, */ KmReturned, Start, End/*, VStatus*/)
+    //= (id, customer, vehicle, /*customerSSN, customer, regNo, vehiclesMake,*/ cost, /* kmRented, */  kmReturned, start, end/*, VStatus*/);
+    #endregion
 
+  
     public Booking(int id, ICustomer customer, IVehicle vehicle)
     {
         Id = id;
@@ -35,18 +47,13 @@ public class Booking : IBooking
         Vehicle = vehicle;
         RegNo = vehicle.RegNo;
         Start = DateTime.Now;
-        KmRented = vehicle.Odometer;
-        //VStatus = VehicleStatuses.Booked;
+        OdormeterRented = vehicle.Odometer;
+        BookingStatus = VehicleStatuses.Booked;
 
-        //TODO : Varför behövde jag göra en metod för detta? Kort sagt varför fungera inte det ovan? Är det för att den sätter en ny status på själva bookingen?
         vehicle.StatusSwitch(VehicleStatuses.Booked);
     }
 
     #endregion
-
-
-
-
 
 
 

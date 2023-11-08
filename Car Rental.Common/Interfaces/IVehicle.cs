@@ -24,9 +24,11 @@ namespace Car_Rental.Common.Interfaces
 
          double CostDay { get; set; }
 
-        VehicleStatuses VStatus { get; }
+        VehicleStatuses VStatus { get; set; }
 
         void StatusSwitch(VehicleStatuses status);
+
+        void UpdateOdometer(double km);
 
     }
 }

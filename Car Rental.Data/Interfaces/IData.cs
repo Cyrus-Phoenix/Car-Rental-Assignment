@@ -26,21 +26,21 @@ namespace Car_Rental.Data.Interfaces
          T? Single<T>(Expression<Func<T, bool>>? expression);
          public void Add<T>(T entity);
 
-        public IEnumerable<ICustomer> GetCustomers();
-        public  IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default);
-        public IEnumerable<IBooking> GetBookings();
+        //public IEnumerable<ICustomer> GetCustomers();
+        //public  IEnumerable<IVehicle> GetVehicles(VehicleStatuses status = default);
+        //public IEnumerable<IBooking> GetBookings();
 
 
       
         IBooking RentVehicle(int vehicleId, int customerId);
-        //IBooking ReturnVehicle(int vehicleId);
+        IBooking ReturnVehicle(int vehicleId, double kmReturned);
 
 
 
         // Default Interface Methods
-        public string[] VehicleStatusNames => Enum.GetNames(typeof(VehicleStatuses));// Retunera enum konstanterna
-        public string[] VehicleTypeNames => Enum.GetNames(typeof(VehiclesTypes));// Retunera enum konstanterna
-        public string[] VehicleMakeNames => Enum.GetNames(typeof(VehiclesMake));// Retunera enum konstanterna
+        public string[] VehicleStatusNames => Enum.GetNames(typeof(VehicleStatuses)); // Retunera enum konstanterna
+        public string[] VehicleTypeNames => Enum.GetNames(typeof(VehiclesTypes)); // Retunera enum konstanterna
+        public string[] VehicleMakeNames => Enum.GetNames(typeof(VehiclesMake)); // Retunera enum konstanterna
 
         //Fråga om varför den måste "castas" ? Den castas pga att Parse vill ha en object och då måste man ange vad för dadatyp objecten blir när den kommer in.
         public VehiclesTypes GetVehicleType(string name) => (VehiclesTypes)Enum.Parse(typeof(VehiclesTypes), name); // Retunera en enum konstants värde med hjälp av konstantens namn

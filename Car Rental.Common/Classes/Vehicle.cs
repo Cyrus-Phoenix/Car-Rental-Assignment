@@ -39,6 +39,8 @@ namespace Car_Rental.Common.Classes
         
         public void StatusSwitch(VehicleStatuses status) => VStatus = status;
 
+        public virtual void UpdateOdometer(double km) => Odometer += km;
+
         #endregion
 
     }

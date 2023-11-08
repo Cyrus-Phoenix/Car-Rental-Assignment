@@ -1,5 +1,6 @@
 ﻿using Car_Rental.Common.Classes;
 using Car_Rental.Common.Enums;
+using Car_Rental.Common.Extensions;
 using Car_Rental.Common.Interfaces;
 using Car_Rental.Data.Interfaces;
 using System;
@@ -113,7 +114,8 @@ public class BookingProcessor
     #region Booking
 
     public Booking NewBooking = new();
-    public IEnumerable<IBooking> GetBookings() => _db.GetBookings();
+    public IEnumerable<IBooking> GetBookings() => _db.Get<IBooking>(null);
+    
     public IVehicle? GetVehicle(int vehicleId) => _db.Single<IVehicle>(v => v.Id.Equals(vehicleId));
     public IVehicle? GetVehicle(string regNo) => _db.Single<IVehicle>(v => v.RegNo.Equals(regNo));
     public ICustomer? GetCustomer(int ssn) => _db.Single<ICustomer>(c => c.Id.Equals(ssn));
@@ -154,11 +156,13 @@ public class BookingProcessor
 
     }
 
-     //public IBooking ReturnVehicle(int vehicleId, double ditance)
-     //{
-        
-    
-     //}
+     public void ReturnVehicle(int vehicleId, double kmReturned)
+     {
+        var booking = _db.ReturnVehicle(vehicleId, kmReturned);
+       // BookingExtensions.Return(booking, kmReturned);
+        NewBooking.KmReturned = default;
+     
+     }
 
 
 

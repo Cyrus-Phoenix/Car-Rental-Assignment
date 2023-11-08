@@ -32,16 +32,16 @@ public class CollectionData : IData
 
 
     int numberOfDays;
-    int kmReturned;
+   // int kmReturned;
 
     public CollectionData()
     {
         #region With VehicleStatuses
 
         var vehicle1 = new Car(1, "ABC 123", (VehiclesMake)1, VehiclesTypes.Sedan, 5500, 5, 250, VehicleStatuses.Available);
-        Car vehicle2 = new (2, "ABC 345", VehiclesMake.BMW, VehiclesTypes.Combi, 8500, 2, 140, VehicleStatuses.Available);
+        Car vehicle2 = new(2, "ABC 345", VehiclesMake.BMW, VehiclesTypes.Combi, 8500, 2, 140, VehicleStatuses.Available);
         var vehicle3 = new Motorcycle(3, "DEF 123", (VehiclesMake)3, VehiclesTypes.Motorcycle, 500, 10, 300, VehicleStatuses.Available);
-        Motorcycle vehicle4 = new (4, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 1, 80, VehicleStatuses.Available);
+        Motorcycle vehicle4 = new(4, "DEF 345", VehiclesMake.VW, VehiclesTypes.Motorcycle, 2500, 1, 80, VehicleStatuses.Available);
 
         _vehicles.Add(vehicle1);
         _vehicles.Add(vehicle2);
@@ -67,66 +67,32 @@ public class CollectionData : IData
 
         #region Booking
 
-        
-        
-        (DateTime startBook1, DateTime endBook1) = BookingDates(new DateTime(2023, 6, 12), new DateTime(2023, 6, 13));
-        numberOfDays = DaysRented(startBook1, endBook1);
-        double kmReturned1 = KmAmount(400);
-        var cost1 = CostCalculator(vehicle1, endBook1);
 
-        var b1 = new Booking(
-                            1,
-                            customer1,
-                            vehicle1,
-                            cost1,
-                            //vehicle1.Odometer,
-                            kmReturned1 + vehicle1.Odometer,
-                            startBook1,
-                            endBook1,
-                            vehicle1.VStatus = VehicleStatuses.Available
-                            ) ;
+
+      //TODO : Varför startar den som bookad när bokning avslutas här?
+        var b1 = new Booking( 1 , customer2, vehicle3 );
         _bookings.Add(b1);
-
+        BookingExtensions.Return(b1, 100);
         
 
-
-        (DateTime startBook2, DateTime endBook2) = BookingDates(new DateTime(2023, 6, 12), DateTime.MinValue);
-        numberOfDays = DaysRented(startBook2, endBook2);
-        double kmReturned2 = KmAmount(0);
-        double cost2 = CostCalculator(vehicle1, endBook2);
-        var b2 = new Booking
-            (
-                           2,
-                           customer2,
-                           vehicle2,
-                           //customer2.SSN,
-                           //customer2.FName + " " + customer2.LName,
-                           //vehicle2.RegNo,
-                           //vehicle2.VehicleMake,
-                           cost2,
-                           //vehicle2.Odometer,
-                           kmReturned2 + vehicle2.Odometer,
-                           startBook2,
-                           endBook2,
-                           vehicle2.VStatus = VehicleStatuses.Booked
-             ) ;
+        var b2 = new Booking( 2, customer1, vehicle1 ) ;
         _bookings.Add(b2);
+        BookingExtensions.Return(b2, 500);
 
-        
 
 
         #endregion
 
     }
-
+    
 
     #region All Methods
 
-    int KmAmount(int km)
-    {
-        kmReturned = km;
-        return kmReturned;
-    }
+    //int KmAmount(int km)
+    //{
+    //    kmReturned = km;
+    //    return kmReturned;
+    //}
 
 
     #region Old Way of typing method
@@ -138,30 +104,30 @@ public class CollectionData : IData
     #endregion
 
 
-    (DateTime, DateTime) BookingDates(DateTime startingDate, DateTime endingDate) 
-    =>  (startingDate, endingDate);
+    //(DateTime, DateTime) BookingDates(DateTime startingDate, DateTime endingDate) 
+    //=>  (startingDate, endingDate);
 
 
-    int DaysRented(DateTime startBook, DateTime endBook)
-    {
-        TimeSpan days = startBook - endBook;
-        int totalDays = days.Days;
-        return totalDays;
-    }
+    //int DaysRented(DateTime startBook, DateTime endBook)
+    //{
+    //    TimeSpan days = startBook - endBook;
+    //    int totalDays = days.Days;
+    //    return totalDays;
+    //}
 
-    double CostCalculator(IVehicle vehicle, DateTime endBook)
-    {
+    //double CostCalculator(IVehicle vehicle, DateTime endBook)
+    //{
 
-        double cost = 0;
+    //    double cost = 0;
 
-        if (endBook == DateTime.MinValue)
-        {
-            return cost;
-        }
-        cost = (numberOfDays * vehicle.CostDay) + (kmReturned * vehicle.CostKm);
-        return cost;
+    //    if (endBook == DateTime.MinValue)
+    //    {
+    //        return cost;
+    //    }
+    //    cost = (numberOfDays * vehicle.CostDay) + (kmReturned * vehicle.CostKm);
+    //    return cost;
 
-    }
+    //}
 
     #endregion
 
@@ -320,10 +286,23 @@ public class CollectionData : IData
         
     }
 
-    //public IBooking ReturnVehicle(int vehicleId, int customerId)
-    //{
+
+    //TODO : Fixa Return metoden och hela den funktionen för programmet.
+
+    public IBooking ReturnVehicle(int vehicleId, double kmReturned)
+    {
+        var booking = _bookings.SingleOrDefault(b => b.Vehicle.Id.Equals(vehicleId) && b.BookingStatus == VehicleStatuses.Booked);
         
-    //}
+      
+        if (booking is not null)
+        {
+            booking.BookingStatus = VehicleStatuses.Available;
+            booking.Return(kmReturned);
+            return booking;
+        }
+           
+        throw new Exception("Couldn't find booking");
+    }
 
 
     #endregion
