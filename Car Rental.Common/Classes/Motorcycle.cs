@@ -6,8 +6,8 @@ public class Motorcycle : Vehicle
 {
 
     /* 
-    * Just for inheritance example
-    * In this case makes no sense to have this.
+    * Just a inheritance example
+    * In this case it makes no sense to have this property.
     */
 
     int McID {  get; init; }

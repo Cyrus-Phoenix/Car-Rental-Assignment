@@ -73,141 +73,163 @@ public class CollectionData : IData
         #endregion
 
     }
-    
+
 
     //TODO : Se mer på generics och generics lektions videon.
 
     #region Generic Methods
 
+    #region Old code, can be removed. just here for a reminder.
+    //public List<T> Get<T>(Expression<Func<T, bool>>? expression)
+    //{
+    //    try {
 
+    //        // Hämta fälten Propertierna etc.
+    //        var fieldInfo = GetType()
+    //            .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+    //            .FirstOrDefault(f => f.FieldType == typeof(List<T>))
+    //            ?? throw new InvalidOperationException("Unsupported type");
+
+
+    //        #region Code that worked
+
+    //        var values = (List<T>)fieldInfo.GetValue(this)
+    //           ?? throw new InvalidOperationException($"No list of type {typeof(T)} found.");
+
+    //        if (expression is null) return values;
+
+    //        // Execute the Compiled Lambda: You can now execute the compiled lambda expression as if it were a regular function: enligt chatgpt
+    //        return values.Where(expression.Compile()).ToList();
+
+    //        #endregion
+
+
+    //    }
+    //    catch (Exception ex) {
+
+    //        throw ex;
+
+    //    }
+    //}
+
+
+    //public void Add<T>(T entity)
+    //{
+    //    var fieldInfo = GetType()
+    //            .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+    //            .FirstOrDefault(f => f.FieldType == typeof(List<T>))
+    //            ?? throw new InvalidOperationException($"No type of {typeof(T)} found.");
+
+    //    // Varför fungerade inte IQueryable och varför var denna tvungen att castas som List<T> ? IQueryable är för filtrering och metoden i dethär fallet vill lägga till något och inte filtrera.
+    //    var list = (List<T>)fieldInfo.GetValue(this)
+    //                    ?? throw new InvalidDataException($"No data of found.");
+
+    //    // var list = (IQueryable<T>)entity;
+
+
+
+
+    //    /// TDO Varför fungera inte den code blocket under?
+    //     // value.Add(entity) /* Är det för att den kollar på value.add funktionen och inte entity variabeln? */
+    //      // ?? throw new ArgumentNullException($"Could not add null element");
+
+    //    if (entity is not null)
+    //    {
+    //       list.Add(entity);
+    //    }
+    //    else
+    //    {
+    //        throw new ArgumentNullException($"Could not add null element");
+    //    }
+
+    //}
+
+    //public T? Single<T>(Expression<Func<T, bool>>? expression)
+    //{
+
+    //        // Hämta fälten Propertierna etc.
+    //        var fieldInfo = GetType()
+    //            .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+    //            .FirstOrDefault(f => f.FieldType == typeof(List<T>))
+    //            ?? throw new InvalidOperationException("Unsupported type");
+
+    //        //TODO : Fråga varför IQueryable inte gick här.
+    //        #region Code that didn't work
+
+    //        // Hämta data som den innehåller
+    //        //var value = fieldInfo.GetValue(this)
+    //        //            ?? throw new InvalidDataException($"No data of found.");
+
+    //        //// Omvandla till en IQueryable så att man kan använda lambda
+    //        //// och filtrera innan datat hämtas istället för tvärtom
+    //        //var collection = (IQueryable<T>)value;
+
+    //        //if (expression is null) return collection.SingleOrDefault();
+    //        //return collection.Where(expression).SingleOrDefault();
+
+
+    //        #endregion
+
+    //    if(fieldInfo is not null) 
+    //    {
+    //        // Hämta data som den innehåller
+    //        var value = (List<T>)fieldInfo.GetValue(this)
+    //                    ?? throw new InvalidDataException($"No data of found.");
+
+    //        if (expression is not null) 
+    //        {
+    //            var entity = value.SingleOrDefault(expression.Compile());
+    //            if (entity is not null)
+    //                return entity;
+
+    //        }
+    //        throw new InvalidOperationException($"No matching element of type {typeof(T)} found.");
+
+    //    }
+
+    //    throw new InvalidOperationException($"No type of {typeof(T)} found.");
+
+
+    //}
+    #endregion
+
+
+    List<T> Reflection<T>()
+    {
+        var fieldInfo = GetType()
+            .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
+            .FirstOrDefault(f => f.FieldType == typeof(List<T>))
+            ?? throw new InvalidOperationException("Unsupported type");
+
+        return (List<T>)fieldInfo.GetValue(this)
+               ?? throw new InvalidOperationException($"No list of type {typeof(T)} found.");
+    }
     public List<T> Get<T>(Expression<Func<T, bool>>? expression)
     {
-        try {
-            
-            // Hämta fälten Propertierna etc.
-            var fieldInfo = GetType()
-                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(f => f.FieldType == typeof(List<T>))
-                ?? throw new InvalidOperationException("Unsupported type");
-
-
-            #region Code that didn't work
-            // Hämta data som den innehåller
-            //var value = fieldInfo.GetValue(this)
-            //            ?? throw new InvalidDataException($"No data of found.");
-
-            //// Omvandla till en IQueryable så att man kan använda lambda
-            //// och filtrera innan datat hämtas istället för tvärtom
-
-            ////TODO :  Fråga varför (IQueryable<T>)value inte fungerade här?
-            //var collection = (IQueryable<T>)value;
-
-            //if (expression is null) return collection.ToList();
-            //return collection.Where(expression).ToList();
-
-            #endregion
-
-
-            #region Code that worked
-
-            var values = (List<T>)fieldInfo.GetValue(this)
-               ?? throw new InvalidOperationException($"No list of type {typeof(T)} found.");
-
-            if (expression is null) return values;
-
-            // Execute the Compiled Lambda: You can now execute the compiled lambda expression as if it were a regular function: enligt chatgpt
-            return values.Where(expression.Compile()).ToList();
-
-            #endregion
-          
-
-        }
-        catch (Exception ex) {
-
-            throw ex;
-
-        }
+        if (expression is null) return Reflection<T>();
+        return Reflection<T>().Where(expression.Compile()).ToList();
     }
-    
 
     public void Add<T>(T entity)
     {
-        var fieldInfo = GetType()
-                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(f => f.FieldType == typeof(List<T>))
-                ?? throw new InvalidOperationException($"No type of {typeof(T)} found.");
-
-        // Varför fungerade inte IQueryable och varför var denna tvungen att castas som List<T> ? IQueryable är för filtrering och metoden i dethär fallet vill lägga till något och inte filtrera.
-        var list = (List<T>)fieldInfo.GetValue(this)
-                        ?? throw new InvalidDataException($"No data of found.");
-        
-        // var list = (IQueryable<T>)entity;
-
-
-
-
-        /// TDO Varför fungera inte den code blocket under?
-         // value.Add(entity) /* Är det för att den kollar på value.add funktionen och inte entity variabeln? */
-          // ?? throw new ArgumentNullException($"Could not add null element");
-
         if (entity is not null)
         {
-           list.Add(entity);
+            Reflection<T>().Add(entity);
         }
         else
         {
             throw new ArgumentNullException($"Could not add null element");
         }
-
     }
 
     public T? Single<T>(Expression<Func<T, bool>>? expression)
     {
-       
-            // Hämta fälten Propertierna etc.
-            var fieldInfo = GetType()
-                .GetFields(BindingFlags.NonPublic | BindingFlags.Instance)
-                .FirstOrDefault(f => f.FieldType == typeof(List<T>))
-                ?? throw new InvalidOperationException("Unsupported type");
+        if (expression is not null)
+            return Reflection<T>().SingleOrDefault(expression.Compile());
 
-            //TODO : Fråga varför IQueryable inte gick här.
-            #region Code that didn't work
-
-            // Hämta data som den innehåller
-            //var value = fieldInfo.GetValue(this)
-            //            ?? throw new InvalidDataException($"No data of found.");
-
-            //// Omvandla till en IQueryable så att man kan använda lambda
-            //// och filtrera innan datat hämtas istället för tvärtom
-            //var collection = (IQueryable<T>)value;
-
-            //if (expression is null) return collection.SingleOrDefault();
-            //return collection.Where(expression).SingleOrDefault();
-
-
-            #endregion
-
-        if(fieldInfo is not null) 
-        {
-            // Hämta data som den innehåller
-            var value = (List<T>)fieldInfo.GetValue(this)
-                        ?? throw new InvalidDataException($"No data of found.");
-
-            if (expression is not null) 
-            {
-                var entity = value.SingleOrDefault(expression.Compile());
-                if (entity is not null)
-                    return entity;
-            
-            }
-            throw new InvalidOperationException($"No matching element of type {typeof(T)} found.");
-
-        }
-
-        throw new InvalidOperationException($"No type of {typeof(T)} found.");
-
-
+        throw new InvalidOperationException($"No matching element of type {typeof(T)} found.");
     }
+
 
 
 

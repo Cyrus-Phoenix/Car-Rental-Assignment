@@ -12,8 +12,8 @@ using System.Reflection.Metadata.Ecma335;
 public class Car : Vehicle
 {
     /* 
-     * Just for inheritance example
-     * In this case makes no sense to have this.
+     * Just a inheritance example
+     * In this case it makes no sense to have this property.
      */
     public int CarID { get; set; }
 
@@ -23,7 +23,7 @@ public class Car : Vehicle
     : base(id, regNo, vmake, vType, odometer, costKm, costDay, vStatus) { }
 
     public Car(int carId, int id, string regNo, VehiclesMake vmake, VehiclesTypes vType, double odometer, double costKm, double costDay, VehicleStatuses vStatus)
-    : base(id, regNo, vmake, vType, odometer, costKm, costDay, vStatus) => (carId) = (CarID);
+    : base(id, regNo, vmake, vType, odometer, costKm, costDay, vStatus) => (CarID) = (carId);
 
 
     #endregion

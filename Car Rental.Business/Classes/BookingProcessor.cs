@@ -8,16 +8,21 @@ namespace Car_Rental.Business.Classes;
 public class BookingProcessor
 {
     #region Variabel & Constructor
-    
-    public bool _isTaskRunning = false;
+
+    //public bool IsTaskRunning = false;
+    public bool IsTaskRunning { get; private set; } = false;
 
     private readonly IData _db;
     public BookingProcessor(IData data) => _db = data;
 
+    
+
     #endregion
 
     #region Props
-    public string ErrorMessage { get; set; } = string.Empty; //Om den inte sätts till empty blir den null per default.
+    public string ErrorMessage { get; private set; } = string.Empty; //Om den inte sätts till empty blir den null per default.
+    public VehicleStatuses FilterState { get; set; } = default;
+
     #endregion
 
 
@@ -35,8 +40,8 @@ public class BookingProcessor
     public void AddCustomer(string socialSecurityNumber, string firstName, string
     lastName)
     {
-         ErrorMessage = string.Empty;
-         socialSecurityNumber = socialSecurityNumber ?? string.Empty; 
+        ErrorMessage = string.Empty;
+        socialSecurityNumber = socialSecurityNumber ?? string.Empty; 
          firstName = firstName ?? string.Empty; 
          lastName = lastName ?? string.Empty;
 
@@ -77,21 +82,22 @@ public class BookingProcessor
     {
         
         ErrorMessage = string.Empty;
-        registrationNumber = registrationNumber.ToUpper();
+        registrationNumber = registrationNumber?.ToUpper() ?? string.Empty;
 
         try
         {
             if (registrationNumber.Trim().Length.Equals(0) || registrationNumber.Trim().Length != 6 || registrationNumber == default
               || make == default || costKm == default || type == default)
             {
-                ErrorMessage = "Couldn't add Vechicle: One of the fields seems to be missing information";
+                ErrorMessage = "Couldn't add Vehicle: One of the fields seems to be missing information";
             }
             else
-            { 
-                if(type is VehiclesTypes.Motorcycle)
-                _db.Add<IVehicle>(new Motorcycle(_db.NewVehicleId,  registrationNumber, make, type, odometer, costKm, costDay, status));
+            {
+               
+                if (type is VehiclesTypes.Motorcycle)
+                _db.Add<IVehicle>(new Motorcycle(_db.NewVehicleId,  registrationNumber, make, type, odometer, costKm, costDay, status = VehicleStatuses.Available));
                 else
-                _db.Add<IVehicle>(new Car(_db.NewVehicleId, registrationNumber, make, type, odometer, costKm, costDay, status));
+                _db.Add<IVehicle>(new Car(_db.NewVehicleId, registrationNumber, make, type, odometer, costKm, costDay, status = VehicleStatuses.Available));
 
             }
             NewCustomer = new();
@@ -132,18 +138,27 @@ public class BookingProcessor
         //     // AWAIT TASK.DELAY (1000)
         //}
         #endregion
-
+        ErrorMessage = string.Empty;
         try
         {
-            _isTaskRunning = true;
+            if (customerId.Equals(0) || vehicleId.Equals(0))
+            {
+               ErrorMessage = "Need to select a custom from the dropdown!";
+               return null;
+            }
+            else
+            {
+                IsTaskRunning = true;
 
-            await Task.Delay(10000);
-            var booking = _db.RentVehicle(vehicleId, customerId);
-            _db.Add(booking);
+                await Task.Delay(10000);
+                var booking = _db.RentVehicle(vehicleId, customerId) ?? throw new Exception("Booking is null");
+                _db.Add(booking);
 
-            _isTaskRunning = false;
+                IsTaskRunning = false;
 
-            return booking;
+                return booking;
+            }
+           
         }
         catch (Exception  e)
         {
