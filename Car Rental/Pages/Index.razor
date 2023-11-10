@@ -31,18 +31,21 @@
     </div>
 }
 
-<div class="input-group" style="width: 150px">
-    <label class="input-group-text bg-dark text-white border border-dark p-2 flex-fill">Filterings</label>
-    <select class="form-select border border-dark p-2 flex-fill" style="width: 500px" @bind="b.FilterState">
-        <option value="" selected>View All</option>
-        <option value="@VehicleStatuses.Available">Available</option>
-        <option value="@VehicleStatuses.Booked">Booked</option>
-    </select>
-</div>
-
 <br />
 <!-- Vehicles  -->
 <div class="container">
+    <!-- Filter Choice -->
+    <div class="input-group mb-3" style="width: 150px">
+        <div class="d-flex flex-row">
+            <label class="input-group-text bg-dark text-white border border-dark">Filterings </label>
+
+            <select class="form-select border border-dark" style="width: 340px;" @bind="b.FilterState">
+                <option value="" selected>View All</option>
+                <option value="@VehicleStatuses.Available">Available</option>
+                <option value="@VehicleStatuses.Booked">Booked</option>
+            </select>
+        </div>
+    </div>
     <h4><strong>Vehicles</strong></h4>
     <table class="table border border-black">
         <thead class="table-dark">
@@ -196,6 +199,20 @@
 <br />
 <!-- Booking Info  -->
 <div class="container">
+
+    <!-- Filter Choice -->
+    <div class="input-group mb-3" style="width: 150px">
+        <div class="d-flex flex-row">
+            <label class="input-group-text bg-dark text-white border border-dark">Filterings </label>
+
+            <select class="form-select border border-dark" style="width: 340px;" @bind="b.FilterState">
+                <option value="" selected>View All</option>
+                <option value="@VehicleStatuses.Available">Available</option>
+                <option value="@VehicleStatuses.Booked">Booked</option>
+            </select>
+        </div>
+    </div>
+
     <h4><strong>Bookings</strong></h4>
     <table class="table border border-black">
         <thead class="table-dark">
